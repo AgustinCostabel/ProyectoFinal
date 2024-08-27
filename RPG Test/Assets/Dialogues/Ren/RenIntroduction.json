@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[["^You can't go out at the moment.","\n","^You are the guard?","\n","^Yes, my name is Ren I found you last night unconscious in the road and bring you here.","\n","^Thanks for that, do you know what happen to me?","\n","^Before we speak go talk with Sofia she will explain.","\n",["done",{"#f":5,"#n":"g-0"}],null],"done",{"#f":1}],"listDefs":{}}
