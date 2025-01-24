@@ -6,10 +6,12 @@ public class Clue : MonoBehaviour, I_InteractableObject {
 
     [SerializeField] private Canvas canvas;
     [SerializeField] private ParticleSystem shine;
+    [SerializeField] private GameObject clueBox;
     bool interactable = true;
     public void Interact(Player player) {
         if (shine.isPlaying) {
-           //shine.Stop();
+            //shine.Stop();
+            clueBox.SetActive(true);
         }
         player.Talk("There is something interesting here");
     }

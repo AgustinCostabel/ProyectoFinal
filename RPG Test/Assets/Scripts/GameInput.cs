@@ -19,6 +19,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnSelectedSpellAction;
     public event EventHandler OnJournalAction;
     public event EventHandler OnMapAction;
+    public event EventHandler OnZoomAction;
 
     private void Awake() {
         if (Instance != null) {
@@ -37,6 +38,12 @@ public class GameInput : MonoBehaviour
         inputActions.Player.SelectedSpell.performed += SelectedSpell_performed;
         inputActions.Player.Journal.performed += Journal_performed;
         inputActions.Player.Map.performed += Map_performed;
+        inputActions.Player.Zoom.performed += Zoom_performed;
+    }
+
+    private void Zoom_performed(InputAction.CallbackContext obj) {
+        float mouseScrollY = inputActions.Player.Zoom.ReadValue<float>() * (float)0.01;
+        OnZoomAction?.Invoke(mouseScrollY, EventArgs.Empty);
     }
 
     private void Map_performed(InputAction.CallbackContext obj) {

@@ -54,7 +54,7 @@ public class GameStateManager : MonoBehaviour
 
     private void Update() {
         if (isFirstEvent && TalkedWithALL()) {
-            //SecondEvent();
+            SecondEvent();
         } else {
             if (isSecondEvent && talkedWithSofia) {
                ThirdEvent();

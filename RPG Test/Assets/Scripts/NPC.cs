@@ -15,22 +15,29 @@ public class NPC : MonoBehaviour, I_InteractableObject
     [SerializeField] private GameObject characterBox;
 
     private int dialogueIndex = 0;
-
     private bool interactable = true;
+
     public void Interact(Player player) {
-            if (dialogues != null) {
-                if (!GameStateManager.Instance.IsThirdEvent()) {
-                    DialoguesUI.Instance.DialogueStart(dialogues[dialogueIndex], dialogueSprite, "???");
-                    characterBox.SetActive(true);
-                } else {
-                    DialoguesUI.Instance.DialogueStart(dialogues[dialogueIndex], dialogueSprite, titleNPC);
-                }
+        //Rotate to Player
+        Vector3 lookPos = player.transform.position - transform.position;
+        lookPos.y = 0f;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 360);
+
+        //Dialogues
+        if (dialogues != null) {
+            if (!GameStateManager.Instance.IsThirdEvent()) {
+                DialoguesUI.Instance.DialogueStart(dialogues[dialogueIndex], dialogueSprite, "???");
+                characterBox.SetActive(true);
+            } else {
+                DialoguesUI.Instance.DialogueStart(dialogues[dialogueIndex], dialogueSprite, titleNPC);
             }
-            if (dialogueIndex < dialogues.Length - 1) {
-                dialogueIndex++;
-            }
-            GameStateManager.Instance.TalkedWith(titleNPC);
-            DialoguesUI.Instance.ChangeChoices(dialoguesChoices, questionsText);
+        }
+        if (dialogueIndex < dialogues.Length - 1) {
+            dialogueIndex++;
+        }
+        GameStateManager.Instance.TalkedWith(titleNPC);
+        DialoguesUI.Instance.ChangeChoices(dialoguesChoices, questionsText);
     }
 
     public void EnableCanvas() {
