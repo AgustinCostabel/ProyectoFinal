@@ -10,8 +10,9 @@ public class Clue : MonoBehaviour, I_InteractableObject {
     bool interactable = true;
     public void Interact(Player player) {
         if (shine.isPlaying) {
-            //shine.Stop();
+            shine.Stop();
             clueBox.SetActive(true);
+            SoundManager.Instance.PlaySoundClue();
         }
         player.Talk("There is something interesting here");
     }

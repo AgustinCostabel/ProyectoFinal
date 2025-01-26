@@ -14,8 +14,8 @@ public class DirectionalLight : MonoBehaviour
     private new Light light;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float rotationSpeedSkybox;
-    float rotationX = 45f;
-    float rotationY = 45f;
+    [SerializeField] private float rotationX = 45f;
+    [SerializeField] private float rotationY = 45f;
     public bool direction = true;
 
     private float lerpTime;
@@ -46,7 +46,7 @@ public class DirectionalLight : MonoBehaviour
     }
 
     void Update() {
-        transform.localEulerAngles = new Vector3(70, RotationY(), 0);
+        /*transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
         RenderSettings.skybox.SetFloat("_Rotation", Time.time * rotationSpeedSkybox);
 
         light.color = Color.Lerp(light.color, skyColors[nextColor], lerpTime * Time.deltaTime);
@@ -59,8 +59,7 @@ public class DirectionalLight : MonoBehaviour
             } else {
                 nextColor++;
             }
-        }
-
+        }*/
     }
 
     private void GameManager_OnTimeLapsed(object sender, EventArgs e) {
@@ -68,20 +67,21 @@ public class DirectionalLight : MonoBehaviour
         light.color = new Color32(255, 240, 200, 1);
         nextColor = 1;
         t = 0f;
-        rotationX = 70f;
-        rotationY = 0f;
     }
 
     private void GameManager_OnSunrise(object sender, System.EventArgs e) {
-        RenderSettings.skybox.SetColor("_Tint", new Color32(120, 120, 120, 1));
+        RenderSettings.skybox.SetColor("_Tint", new Color32(175, 175, 175, 1));
     }
     private void GameManager_OnNoon(object sender, System.EventArgs e) {
     }
     private void GameManager_OnSunset(object sender, System.EventArgs e) {
         RenderSettings.skybox.SetColor("_Tint", new Color32(75, 75, 75, 1));
+        light.color = skyColors[2];
     }
 
     private void GameManager_OnNight(object sender, System.EventArgs e) {
+        RenderSettings.skybox.SetColor("_Tint", new Color32(0, 0, 0, 1));
+        light.color = skyColors[4];
     }
 
     private void GameManager_OnDarkNight(object sender, System.EventArgs e) {

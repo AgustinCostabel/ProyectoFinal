@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     private float gameTimer;
     private State state;
     [SerializeField] private Animator deathFadeOut;
+    [SerializeField] private Material windLeaves;
+    [SerializeField] private Material normalLeaves;
+    [SerializeField] private GameObject tree;
     private bool menuOpened = false;
 
     public event EventHandler OnSunrise;
@@ -44,6 +47,8 @@ public class GameManager : MonoBehaviour
 
         MenuUI.Instance.SetTimelineActive(true);
 
+        ChangeTreeMaterial(normalLeaves);
+
         StartGame();
     }
 
@@ -56,9 +61,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
  
-        gameTimer -= Time.deltaTime; 
+        //gameTimer -= Time.deltaTime; 
 
-        switch(state) {
+        /*switch(state) {
             case State.Sunrise:
                 if(gameTimer < gameTimerMax - gameTimerMax / 5) {
                     state = State.Noon;
@@ -90,11 +95,13 @@ public class GameManager : MonoBehaviour
                     gameTimer = gameTimerMax;
                 }
                 break;
-        }
+        }*/
      
     }
 
     public void StartGame() {
+        ChangeTreeMaterial(windLeaves);
+
         gameTimer = gameTimerMax;
 
         UnpauseGame();
@@ -102,12 +109,35 @@ public class GameManager : MonoBehaviour
         MusicManager.Instance.StopSong();
 
         OnTimeLapsed.Invoke(this, EventArgs.Empty);
-        OnSunrise.Invoke(this, EventArgs.Empty);
+        OnSunrise?.Invoke(this, EventArgs.Empty);
 
         MenuUI.Instance.SetTimelineActive(false);
         Player.Instance.SetIsDoingAction(false);
         WeatherManager.Instance.RainCutsceneStop();
         GameStateManager.Instance.FirstEvent();
+
+        //OnNight.Invoke(this, EventArgs.Empty);
+    }
+
+    private void ChangeTreeMaterial(Material material) {
+        LODGroup lodGroup = tree.GetComponent<LODGroup>();
+        if (lodGroup == null) {
+            Debug.LogError("No LOD Group found on this GameObject!");
+            return;
+        }
+
+        // Get all LOD levels
+        LOD[] lods = lodGroup.GetLODs();
+
+        foreach (LOD lod in lods) {
+            // Loop through all renderers in each LOD level
+            foreach (Renderer renderer in lod.renderers) {
+                if (renderer != null) {
+                    // Change the material
+                    renderer.material = material;
+                }
+            }
+        }
     }
 
     public void Restart() {
@@ -148,5 +178,13 @@ public class GameManager : MonoBehaviour
 
     public void SetMenuOpened(bool opened) {
         menuOpened = opened;
+    }
+
+    public void CallNight() {
+        OnNight?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void Sunset() {
+        OnSunset?.Invoke(this, EventArgs.Empty);
     }
 }

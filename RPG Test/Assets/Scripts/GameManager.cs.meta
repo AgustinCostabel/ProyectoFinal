@@ -3,7 +3,11 @@ guid: 64750405bc55a3a48a59b3ed17611332
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - deathFadeOut: {instanceID: 0}
+  - windLeaves: {fileID: 2100000, guid: a83f9e49062d7654bb3758e78b961716, type: 2}
+  - normalLeaves: {fileID: 2100000, guid: 8af88630f3e39674ebf26b0b91a7306f, type: 2}
+  - tree: {fileID: 8916932963258096687, guid: eeb5a02a64d62f24285efdf37e575961, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

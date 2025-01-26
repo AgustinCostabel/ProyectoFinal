@@ -301,8 +301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 5954098282279051305}
-  dialogue: {fileID: 11400000, guid: 4c39132a83d5fb34690f07203d3c1e9b, type: 2}
   shine: {fileID: 3455895474625630032}
+  clueBox: {fileID: 0}
 --- !u!65 &1766834819815021498
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -547,7 +547,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.81640965, b: 0.032075405, a: 1}
+      maxColor: {r: 1, g: 0.63837063, b: 0.031372547, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

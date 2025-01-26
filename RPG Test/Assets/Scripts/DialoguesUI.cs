@@ -37,8 +37,6 @@ public class DialoguesUI : MonoBehaviour
 
     private int sentencesCount = 0;
 
-    private bool isAddingRichTextTag = false;
-
     private List<(int startIndex, int length)> wiggleWordRanges = new List<(int startIndex, int length)>();
 
     private void Awake() {

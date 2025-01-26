@@ -88,6 +88,7 @@ public class GameStateManager : MonoBehaviour
         }
         if(nameNPC == "Rose") {
             talkedWithRose = true;
+            GameManager.Instance.CallNight();
         }
         if (nameNPC == "Daren") {
             talkedWithDaren = true;
