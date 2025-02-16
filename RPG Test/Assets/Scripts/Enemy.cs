@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour, I_HasProgress {
     private const string WALK = "Walk";
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour, I_HasProgress {
     private void Start() {
         animator = GetComponent<Animator>();
         health = healthMax;
+        gameObject.transform.position = originalPosition.position;
 
         GameManager.Instance.OnTimeLapsed += GameManager_OnTimeLapsed;
     }
@@ -57,20 +59,20 @@ public class Enemy : MonoBehaviour, I_HasProgress {
 
     private void EnemyBehaviour() {
 
-        if (Vector3.Distance(transform.position, player.transform.position) > chaseDistance || player.GetIsDeath()) {
+        if (Vector3.Distance(transform.position, player.transform.position) > chaseDistance) {
             if (fighting == true) {
                 MusicManager.Instance.StopSong();
                 MusicManager.Instance.DayNightSong();
                 fighting = false;
                 animator.SetBool(RUN, false);
-                chaseDistance /= 5;
+                chaseDistance /= 2;
             }
         } else {
             if (fighting == false) {
                 MusicManager.Instance.StopSong();
                 MusicManager.Instance.FightSong();
                 fighting = true;
-                chaseDistance *= 5;
+                chaseDistance *= 2;
             }
             if (Vector3.Distance(transform.position, player.transform.position) > attackDistance && !isAttacking) {
                 Vector3 lookPos = player.transform.position - transform.position;

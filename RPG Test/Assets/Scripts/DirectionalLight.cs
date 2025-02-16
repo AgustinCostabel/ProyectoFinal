@@ -20,7 +20,6 @@ public class DirectionalLight : MonoBehaviour
 
     private float lerpTime;
     [SerializeField] private Color[] skyColors;
-    private int nextColor;
     private float t = 0f;
 
     private void Awake() {
@@ -30,7 +29,7 @@ public class DirectionalLight : MonoBehaviour
 
     private void Start() {
 
-        lerpTime = (1/GameManager.Instance.GetGameTimerMax())*10;
+        //lerpTime = (1/GameManager.Instance.GetGameTimerMax())*10;
 
         GameManager.Instance.OnSunrise += GameManager_OnSunrise;
         GameManager.Instance.OnNoon += GameManager_OnNoon;
@@ -42,7 +41,6 @@ public class DirectionalLight : MonoBehaviour
         RenderSettings.skybox.SetColor("_Tint", new Color32(10, 10, 10, 1));
 
         light.color = skyColors[4];
-        nextColor = 4;
     }
 
     void Update() {
@@ -65,7 +63,6 @@ public class DirectionalLight : MonoBehaviour
     private void GameManager_OnTimeLapsed(object sender, EventArgs e) {
         RenderSettings.skybox.SetColor("_Tint", new Color32(120, 120, 120, 1));
         light.color = new Color32(255, 240, 200, 1);
-        nextColor = 1;
         t = 0f;
     }
 
@@ -89,19 +86,19 @@ public class DirectionalLight : MonoBehaviour
     }
 
 
-    float RotationX() {
+    /*float RotationX() {
         rotationX += rotateSpeed * Time.deltaTime;
         if (rotationX >= 70f)
             rotationX -= 25f;
         return direction ? rotationX : -rotationX;
-    }
+    }*/
 
-    float RotationY() {
+    /*float RotationY() {
         rotationY += rotateSpeed * Time.deltaTime;
         if (rotationY >= 55f)
             rotationY -= 100f;
         return direction ? rotationY : -rotationY;
-    }
+    }*/
 
     public Light GetLight() {
         return light;

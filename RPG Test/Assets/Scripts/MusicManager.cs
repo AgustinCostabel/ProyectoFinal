@@ -52,7 +52,7 @@ public class MusicManager : MonoBehaviour
 
     public void DayNightSong() {
         StopAllCoroutines();
-        if(GameManager.Instance.GetGameState() == GameManager.State.Night || GameManager.Instance.GetGameState() == GameManager.State.DarkNight) {
+        if(GameManager.Instance.IsNight()) {
             StartCoroutine(ChangeSong(musicNight));
         } else {
             StartCoroutine(ChangeSong(musicDay));

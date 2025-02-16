@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material windLeaves;
     [SerializeField] private Material normalLeaves;
     [SerializeField] private GameObject tree;
+    [SerializeField] private Boolean isNight;
     private bool menuOpened = false;
 
     public event EventHandler OnSunrise;
@@ -50,6 +51,10 @@ public class GameManager : MonoBehaviour
         ChangeTreeMaterial(normalLeaves);
 
         StartGame();
+
+        if (isNight) {
+            OnNight?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     private void Player_OnDeathPlayer(object sender, EventArgs e) {
@@ -174,6 +179,10 @@ public class GameManager : MonoBehaviour
 
     public bool GetMenuOpened() {
         return menuOpened;
+    }
+
+    public bool IsNight() {
+        return isNight;
     }
 
     public void SetMenuOpened(bool opened) {

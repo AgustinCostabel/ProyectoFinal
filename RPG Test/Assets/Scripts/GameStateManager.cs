@@ -36,6 +36,8 @@ public class GameStateManager : MonoBehaviour
     private void Start() {
         GameManager.Instance.OnNight += GameManager_OnNight;
         GameManager.Instance.OnSunrise += GameManager_OnSunrise;
+
+        isFirstEvent = true;
     }
 
     private void GameManager_OnSunrise(object sender, System.EventArgs e) {
@@ -53,13 +55,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     private void Update() {
-        if (isFirstEvent && TalkedWithALL()) {
-            SecondEvent();
-        } else {
-            if (isSecondEvent && talkedWithSofia) {
-               ThirdEvent();
-            }
-        }
+        
     }
 
     public void FirstEvent() {
@@ -79,6 +75,7 @@ public class GameStateManager : MonoBehaviour
         ren.gameObject.transform.position = new Vector3(175, 10, 235);
         rose.gameObject.transform.position = new Vector3(225, 10, 227);
         isSecondEvent = false;
+        isFirstEvent = false;
         isThirdEvent = true;
     }
 
@@ -88,7 +85,6 @@ public class GameStateManager : MonoBehaviour
         }
         if(nameNPC == "Rose") {
             talkedWithRose = true;
-            GameManager.Instance.CallNight();
         }
         if (nameNPC == "Daren") {
             talkedWithDaren = true;

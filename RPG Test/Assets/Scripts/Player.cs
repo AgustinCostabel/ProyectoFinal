@@ -77,6 +77,7 @@ public class Player : MonoBehaviour, I_HasProgress {
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     private bool hasKeyMap = true;
+    private bool inTown = true;
 
     private I_InteractableObject selectedObject = null;
 
@@ -114,6 +115,8 @@ public class Player : MonoBehaviour, I_HasProgress {
         Spells.Instance.AddSpell(spellSO2);
         Spells.Instance.AddSpell(spellSO3);
         Spells.Instance.AddSpell(spellSO4);*/
+
+        inTown = true;
 
     }
 
@@ -203,8 +206,43 @@ public class Player : MonoBehaviour, I_HasProgress {
         }
 
         if (other.CompareTag("Village-Forest")) {
-            WeatherManager.Instance.PlayJungle();
-            inGrass = !inGrass;
+            if (inTown) {
+                //Music
+                WeatherManager.Instance.PlayJungle();
+                MusicManager.Instance.StopSong();
+                //Floor
+                inGrass = !inGrass;
+                //Lights
+                foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
+                    if (lightsTown != null) {
+                        lightsTown.GetComponent<Light>().enabled = false;
+                    }
+                }
+                foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
+                    if (lightsVillage != null) {
+                        lightsVillage.GetComponent<Light>().enabled = true;
+                    }
+                }
+                inTown = !inTown;
+            } else {
+                //Music
+                WeatherManager.Instance.PlayJungle();
+                MusicManager.Instance.DayNightSong();
+                //Floor
+                inGrass = !inGrass;
+                //Lights
+                foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
+                    if (lightsTown != null) {
+                        lightsTown.GetComponent<Light>().enabled = true;
+                    }
+                }
+                foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
+                    if (lightsVillage != null) {
+                        lightsVillage.GetComponent<Light>().enabled = false;
+                    }
+                }
+                inTown = !inTown;
+            }
         }
     }
 
@@ -273,6 +311,11 @@ public class Player : MonoBehaviour, I_HasProgress {
         if (selectedObject != null && selectedObject.IsInteractable()) {
             interactableObject.EnableCanvas();
         }
+    }
+
+    public void IncreaseHealth() {
+        healthMax = 100;
+        health = healthMax;
     }
 
     public void Heal(int heal) {

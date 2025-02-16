@@ -19,10 +19,10 @@ public class ChestWeapon : MonoBehaviour, I_InteractableObject
 
     public void Start() {
         animation = GetComponent<Animation>();
+        canOpen = true;
     }
     public void Interact(Player player) {
         if (!canOpen) {
-            //DialoguesUI.Instance.DialogueStart(dialogue);
             player.Talk("Closed, I need a KEY");
         }
         if (!opened && !player.IsWalking() &&canOpen) {
@@ -32,6 +32,7 @@ public class ChestWeapon : MonoBehaviour, I_InteractableObject
             Weapons.SpawnWeapon(weaponSO, player, this);
             gameObject.layer = LayerMask.NameToLayer("Default");
             interactable = false;
+            player.IncreaseHealth();
             DisableCanvas();
         }
     }

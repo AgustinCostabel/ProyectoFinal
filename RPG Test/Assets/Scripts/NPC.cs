@@ -24,6 +24,9 @@ public class NPC : MonoBehaviour, I_InteractableObject
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 360);
 
+        GameStateManager.Instance.TalkedWith(titleNPC);
+        DialoguesUI.Instance.ChangeChoices(dialoguesChoices, questionsText);
+
         //Dialogues
         if (dialogues != null) {
             if (!GameStateManager.Instance.IsThirdEvent()) {
@@ -36,8 +39,6 @@ public class NPC : MonoBehaviour, I_InteractableObject
         if (dialogueIndex < dialogues.Length - 1) {
             dialogueIndex++;
         }
-        GameStateManager.Instance.TalkedWith(titleNPC);
-        DialoguesUI.Instance.ChangeChoices(dialoguesChoices, questionsText);
     }
 
     public void EnableCanvas() {

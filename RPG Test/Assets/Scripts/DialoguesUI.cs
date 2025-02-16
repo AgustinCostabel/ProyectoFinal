@@ -23,8 +23,7 @@ public class DialoguesUI : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Image dialogueImage;
     [SerializeField] private TextMeshProUGUI dialogueTitle;
     [SerializeField] private float speedText;
-    [SerializeField] private GameObject dialogueChoices;
-    [SerializeField] private Choices[] Choices;
+    [SerializeField] private DialogueChoices dialogueChoices;
 
     [SerializeField] private float wiggleSpeed;
     [SerializeField] private float wiggleAmplitud;
@@ -55,7 +54,7 @@ public class DialoguesUI : MonoBehaviour
         titleNPC = title;
         spriteNPC = newSprite;
         dialogueBox.SetActive(true);
-        dialogueChoices.SetActive(false);
+        dialogueChoices.SetActiveTrue();
         Player.Instance.SetIsDoingAction(true);
         GameManager.Instance.SetMenuOpened(true);
         DialogueContinue();
@@ -74,6 +73,7 @@ public class DialoguesUI : MonoBehaviour
                 dialogueTitle.text = titleNPC;
                 dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
             }
+            dialogueChoices.SetActiveFalse();
             StopAllCoroutines();
             StartCoroutine(TypeSentence(currentStory.Continue()));
             sentencesCount++;
@@ -111,7 +111,16 @@ public class DialoguesUI : MonoBehaviour
             }
         }
 
-        continueButton.gameObject.SetActive(true);
+        if (!GameStateManager.Instance.IsThirdEvent()) {
+            continueButton.gameObject.SetActive(true);
+        } else {
+            if (currentStory.canContinue) {
+                continueButton.gameObject.SetActive(true);
+            } else {
+                dialogueChoices.SetActiveTrue();
+                sentencesCount = 0;
+            }
+        }
     }
 
     private string ProcessTags(string text) {
@@ -179,8 +188,9 @@ public class DialoguesUI : MonoBehaviour
     }
 
     public void DialogueEnd() {
+        continueButton.gameObject.SetActive(false);
         dialogueBox.SetActive(false);
-        dialogueChoices.SetActive(false);
+        dialogueChoices.SetActiveFalse();
         Player.Instance.SetIsDoingAction(false);
         GameManager.Instance.SetMenuOpened(false);
         sentencesCount = 0;
@@ -188,20 +198,24 @@ public class DialoguesUI : MonoBehaviour
 
     public void DialogueChoices() {
         continueButton.gameObject.SetActive(false);
-        dialogueChoices.SetActive(true);
+        dialogueChoices.SetActiveTrue();
         sentencesCount = 0;
     }
 
-    public void ChangeChoices(TextAsset[] newDialogues, string[] dialogueQuesitons) {
-        int index = 0;
-        foreach (Choices button in Choices) {
-            button.dialogueChoice = newDialogues[index];
-            button.GetComponentInChildren<TextMeshProUGUI>().text = dialogueQuesitons[index];
-            index++;
+    public void ChangeChoices(TextAsset[] newDialogues, string[] dialogueQuestions) {
+        // Clear existing choices
+        dialogueChoices.ClearChoices();
+
+        // Add new choices to the list
+        for (int i = 0; i < newDialogues.Length; i++) {
+            dialogueChoices.ActiveChoice(i);
+            dialogueChoices.ChangeChoice(i, newDialogues[i], dialogueQuestions[i]);
         }
     }
 
     public void ChoiceClicked(Choices choice) {
-        DialogueStart(choice.dialogueChoice, spriteNPC, titleNPC);
+        sentencesCount = 0;
+        dialogueChoices.SetActiveFalse();
+        DialogueStart(choice.dialogueText, spriteNPC, titleNPC);
     }
 }
