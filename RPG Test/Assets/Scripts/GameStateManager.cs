@@ -18,9 +18,9 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private Transform lanternSpawn;
     [SerializeField] private GameObject secretFence;
 
-    private bool isFirstEvent = false;
-    private bool isSecondEvent = false;
-    private bool isThirdEvent = false;
+    [SerializeField] private bool isFirstEvent = false;
+    [SerializeField] private bool isSecondEvent = false;
+    [SerializeField] private bool isThirdEvent = false;
 
     private bool talkedWithRose = false;
     private bool talkedWithLuke = false;
@@ -37,7 +37,7 @@ public class GameStateManager : MonoBehaviour
         GameManager.Instance.OnNight += GameManager_OnNight;
         GameManager.Instance.OnSunrise += GameManager_OnSunrise;
 
-        isFirstEvent = true;
+        FirstEvent();
     }
 
     private void GameManager_OnSunrise(object sender, System.EventArgs e) {
@@ -95,6 +95,11 @@ public class GameStateManager : MonoBehaviour
         if (nameNPC == "Ren") {
             talkedWithRen = true;
         }
+
+        if (TalkedWithALL()) {
+            SecondEvent();
+        }
+
         if(nameNPC == "Sofia" && isSecondEvent) {
             talkedWithSofia = true;
         }

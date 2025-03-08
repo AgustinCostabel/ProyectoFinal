@@ -29,6 +29,7 @@ public class JournalUI : MonoBehaviour
     private void Hide() {
         if (journalActivation != null) {
             journalActivation.SetActive(false);
+            TooltipManager.Instance.HideTooltip();
         }
     }
 

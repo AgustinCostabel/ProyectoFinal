@@ -9,4 +9,5 @@ public class AudioClipsSO : ScriptableObject
     public AudioClip[] footStepGrass;
     public AudioClip death;
     public AudioClip clue;
+    public AudioClip buttonPress;
 }

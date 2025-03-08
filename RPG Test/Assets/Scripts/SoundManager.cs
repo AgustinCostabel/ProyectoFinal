@@ -70,6 +70,14 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioClipsSO.clue, Camera.main.transform.position, 0.7f);
     }
 
+    public void PlaySoundButton() {
+        PlaySound(audioClipsSO.buttonPress, Camera.main.transform.position, 0.7f);
+    }
+
+    public void PlaySound(AudioClip[] audioClipArray) {
+        PlaySound(audioClipArray[Random.Range(0, audioClipArray.Length)], Camera.main.transform.position, 0.7f);
+    }
+
     private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volumeMultiplier = 1f) {
         PlaySound(audioClipArray[Random.Range(0, audioClipArray.Length)], position, volume * volumeMultiplier);
     }

@@ -1,11 +1,25 @@
-October 17.
-Sorry what?
-I guess you will ask me which day is today.
-So you saw me unconscious last night? any idea what happen?
-I just saw Ren carring you to his house you should thank him, my name is Daren by the way and I'm a blacksmith.
-Why such a small town needs a blacksmith?
-You should ask Judy that question, she hired me after all. And look for Sofia she wants to talk with you.
-I will continue then, see you.
-Oh we will..
+You're awake. Ren found you unconscious in the forest and brought you back. Lucky he was patrolling.
+
+I'm sorry, what's your name?
+
+I'm Daren, the blacksmith in town.
+
+What happened? Why was I out there?
+
+I don’t know. You tell me. You don’t remember anything from last night?
+
+No.
+
+Figures. You should talk to Sofia. She wants to see you.
+
+Sofia?
+
+The chief. She’s the one who’ll have answers for you. Don’t waste time with the others.
+
+What’s going on here? Why am I in this town?
+
+Don’t get too comfortable. Everyone here has their secrets. Be careful who you trust.
+
+I’ll keep that in mind.
 
 

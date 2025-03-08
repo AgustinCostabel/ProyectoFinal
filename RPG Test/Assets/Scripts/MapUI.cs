@@ -11,16 +11,18 @@ public class MapUI : MonoBehaviour
     }
 
     private void GameInput_OnMapAction(object sender, System.EventArgs e) {
-        if (!GameManager.Instance.IsGamePaused()) {
-            if (!mapActivation.gameObject.activeSelf && !GameManager.Instance.GetMenuOpened()) {
-                Show();
-                Player.Instance.SetIsDoingAction(true);
-                GameManager.Instance.SetMenuOpened(true);
-            } else {
-                if (mapActivation.gameObject.activeSelf) {
-                    Hide();
-                    Player.Instance.SetIsDoingAction(false);
-                    GameManager.Instance.SetMenuOpened(false);
+        if (Player.Instance.HasMap()) {
+            if (!GameManager.Instance.IsGamePaused()) {
+                if (!mapActivation.gameObject.activeSelf && !GameManager.Instance.GetMenuOpened()) {
+                    Show();
+                    Player.Instance.SetIsDoingAction(true);
+                    GameManager.Instance.SetMenuOpened(true);
+                } else {
+                    if (mapActivation.gameObject.activeSelf) {
+                        Hide();
+                        Player.Instance.SetIsDoingAction(false);
+                        GameManager.Instance.SetMenuOpened(false);
+                    }
                 }
             }
         }

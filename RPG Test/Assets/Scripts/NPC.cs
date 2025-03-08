@@ -7,12 +7,14 @@ public class NPC : MonoBehaviour, I_InteractableObject
 {
     [SerializeField] private Canvas canvas;
     [SerializeField] private Quest quest;
-    [SerializeField] private TextAsset[] dialogues;
+    [SerializeField] private TextAsset[] dialoguesIntroduction;
+    [SerializeField] private TextAsset[] dialogueBeforeQuestion;
     [SerializeField] private TextAsset[] dialoguesChoices;
     [SerializeField] private string[] questionsText;
     [SerializeField] private Sprite dialogueSprite;
     [SerializeField] private string titleNPC;
     [SerializeField] private GameObject characterBox;
+    [SerializeField] private AudioClip[] voice;
 
     private int dialogueIndex = 0;
     private bool interactable = true;
@@ -24,21 +26,27 @@ public class NPC : MonoBehaviour, I_InteractableObject
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 360);
 
+        //SoundManager.Instance.PlaySound(voice);
+
         GameStateManager.Instance.TalkedWith(titleNPC);
         DialoguesUI.Instance.ChangeChoices(dialoguesChoices, questionsText);
 
         //Dialogues
-        if (dialogues != null) {
-            if (!GameStateManager.Instance.IsThirdEvent()) {
-                DialoguesUI.Instance.DialogueStart(dialogues[dialogueIndex], dialogueSprite, "???");
+        if (dialoguesIntroduction != null) {
+            if (GameStateManager.Instance.IsFirstEvent()) {
+                DialoguesUI.Instance.DialogueStart(dialoguesIntroduction[dialogueIndex], dialogueSprite, "???", this);
                 characterBox.SetActive(true);
+                if (dialogueIndex < dialoguesIntroduction.Length - 1) {
+                    dialogueIndex++;
+                }
             } else {
-                DialoguesUI.Instance.DialogueStart(dialogues[dialogueIndex], dialogueSprite, titleNPC);
+                DialoguesUI.Instance.DialogueStart(dialogueBeforeQuestion[dialogueIndex], dialogueSprite, titleNPC, this);
             }
         }
-        if (dialogueIndex < dialogues.Length - 1) {
-            dialogueIndex++;
-        }
+    }
+
+    public void PlayVoiceSound() {
+        SoundManager.Instance.PlaySound(voice);
     }
 
     public void EnableCanvas() {

@@ -21,7 +21,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Animator deathFadeOut;
     [SerializeField] private Material windLeaves;
     [SerializeField] private Material normalLeaves;
+    [SerializeField] private Material trunk;
     [SerializeField] private GameObject tree;
+    [SerializeField] private GameObject clueCorpse;
     [SerializeField] private Boolean isNight;
     private bool menuOpened = false;
 
@@ -48,7 +50,9 @@ public class GameManager : MonoBehaviour
 
         MenuUI.Instance.SetTimelineActive(true);
 
-        ChangeTreeMaterial(normalLeaves);
+        //clueCorpse.gameObject.SetActive(false);
+
+        //ChangeTreeMaterial(normalLeaves);
 
         StartGame();
 
@@ -105,7 +109,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void StartGame() {
-        ChangeTreeMaterial(windLeaves);
+        //ChangeTreeMaterial(windLeaves);
 
         gameTimer = gameTimerMax;
 
@@ -119,7 +123,8 @@ public class GameManager : MonoBehaviour
         MenuUI.Instance.SetTimelineActive(false);
         Player.Instance.SetIsDoingAction(false);
         WeatherManager.Instance.RainCutsceneStop();
-        GameStateManager.Instance.FirstEvent();
+
+        //clueCorpse.gameObject.SetActive(true);
 
         //OnNight.Invoke(this, EventArgs.Empty);
     }
@@ -135,11 +140,13 @@ public class GameManager : MonoBehaviour
         LOD[] lods = lodGroup.GetLODs();
 
         foreach (LOD lod in lods) {
-            // Loop through all renderers in each LOD level
-            foreach (Renderer renderer in lod.renderers) {
-                if (renderer != null) {
-                    // Change the material
-                    renderer.material = material;
+            foreach (Renderer rend in lod.renderers) // Access all renderers in the LOD
+            {
+                if (rend != null && rend.sharedMaterials.Length > 1) {
+                    Material[] mats = rend.sharedMaterials; // Get a copy of the materials array
+                    mats[0] = trunk;   // Modify first material
+                    mats[1] = material; // Modify second material
+                    rend.sharedMaterials = mats; // Assign the modified array back
                 }
             }
         }

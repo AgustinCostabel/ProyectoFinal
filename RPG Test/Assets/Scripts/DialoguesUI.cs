@@ -33,6 +33,7 @@ public class DialoguesUI : MonoBehaviour
     private string titleNPC;
     private Sprite spriteNPC;
     private Ink.Runtime.Story currentStory;
+    private NPC currentNPC;
 
     private int sentencesCount = 0;
 
@@ -49,10 +50,11 @@ public class DialoguesUI : MonoBehaviour
         continueButton.gameObject.SetActive(false);
     }
 
-    public void DialogueStart(TextAsset inkJSON, Sprite newSprite, string title) {
+    public void DialogueStart(TextAsset inkJSON, Sprite newSprite, string title, NPC npc) {
         currentStory = new Ink.Runtime.Story(inkJSON.text);
         titleNPC = title;
         spriteNPC = newSprite;
+        currentNPC = npc;
         dialogueBox.SetActive(true);
         dialogueChoices.SetActiveTrue();
         Player.Instance.SetIsDoingAction(true);
@@ -72,6 +74,7 @@ public class DialoguesUI : MonoBehaviour
                 dialogueImage.sprite = spriteNPC;
                 dialogueTitle.text = titleNPC;
                 dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
+                currentNPC.PlayVoiceSound();
             }
             dialogueChoices.SetActiveFalse();
             StopAllCoroutines();
@@ -216,6 +219,6 @@ public class DialoguesUI : MonoBehaviour
     public void ChoiceClicked(Choices choice) {
         sentencesCount = 0;
         dialogueChoices.SetActiveFalse();
-        DialogueStart(choice.dialogueText, spriteNPC, titleNPC);
+        DialogueStart(choice.dialogueText, spriteNPC, titleNPC, currentNPC);
     }
 }

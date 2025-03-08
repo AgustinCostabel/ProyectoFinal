@@ -78,6 +78,7 @@ public class Player : MonoBehaviour, I_HasProgress {
     private Quaternion initialRotation;
     private bool hasKeyMap = true;
     private bool inTown = true;
+    private bool hasMap = false;
 
     private I_InteractableObject selectedObject = null;
 
@@ -567,6 +568,10 @@ public class Player : MonoBehaviour, I_HasProgress {
 
     public string GetTitlePlayer() {
         return titlePlayer;
+    }
+
+    public bool HasMap() {
+        return hasMap;
     }
 
     public bool HasKeyMap() {
