@@ -32,10 +32,8 @@ public class DirectionalLight : MonoBehaviour
         //lerpTime = (1/GameManager.Instance.GetGameTimerMax())*10;
 
         GameManager.Instance.OnSunrise += GameManager_OnSunrise;
-        GameManager.Instance.OnNoon += GameManager_OnNoon;
         GameManager.Instance.OnSunset += GameManager_OnSunset;
         GameManager.Instance.OnNight += GameManager_OnNight;
-        GameManager.Instance.OnDarkNight += GameManager_OnDarkNight;
         GameManager.Instance.OnTimeLapsed += GameManager_OnTimeLapsed;
 
         RenderSettings.skybox.SetColor("_Tint", new Color32(10, 10, 10, 1));
@@ -68,21 +66,20 @@ public class DirectionalLight : MonoBehaviour
 
     private void GameManager_OnSunrise(object sender, System.EventArgs e) {
         RenderSettings.skybox.SetColor("_Tint", new Color32(175, 175, 175, 1));
+        light.color = skyColors[0];
+        light.intensity = 4f;
     }
-    private void GameManager_OnNoon(object sender, System.EventArgs e) {
-    }
+
     private void GameManager_OnSunset(object sender, System.EventArgs e) {
-        RenderSettings.skybox.SetColor("_Tint", new Color32(75, 75, 75, 1));
+        RenderSettings.skybox.SetColor("_Tint", new Color32(125, 125, 125, 1));
         light.color = skyColors[2];
+        light.intensity = 3f;
     }
 
     private void GameManager_OnNight(object sender, System.EventArgs e) {
         RenderSettings.skybox.SetColor("_Tint", new Color32(0, 0, 0, 1));
         light.color = skyColors[4];
-    }
-
-    private void GameManager_OnDarkNight(object sender, System.EventArgs e) {
-        RenderSettings.skybox.SetColor("_Tint", new Color32(0, 0, 0, 1));
+        light.intensity = 1f;
     }
 
 

@@ -1,1 +1,1 @@
-﻿
+He stands firm. <b> How can I help you? </b>

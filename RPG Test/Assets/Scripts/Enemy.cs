@@ -108,6 +108,7 @@ public class Enemy : MonoBehaviour, I_HasProgress {
         isDeath = true;
         MusicManager.Instance.StopSong();
         MusicManager.Instance.DayNightSong();
+        Player.Instance.Talk("Well, that was easier than I thought");
     }
 
     public void EndAttackAnimation() {

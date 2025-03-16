@@ -1,0 +1,2 @@
+<b>You found that, huh?</b> He leans against the anvil, rubbing his face as if exhausted.
+<b>Fine. We used to be together… a long time ago. It ended, that’s all. But if you’re asking if I killed her—</b> He glares at you, voice sharp like a blade. <b>—then you don’t know a damn thing. Even if I hated her, I’d never do that to her. And I am sure as hell I didn’t hate her.</b> He turns back to his work, effectively ending the conversation.

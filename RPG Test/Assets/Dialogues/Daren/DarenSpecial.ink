@@ -1,0 +1,3 @@
+He stands at the edge of the water, unmoving. He doesn’t look at you when you approach.<b> Go away.</b> Silence stretches between you. His voice is lower when he speaks again.
+<b>Sheila used to like this place. Said the water was always calm, even when everything else was a mess.</b> His hands tighten into fists before he shakes his head. 
+<b>She’s gone now. And there’s nothing I can do about it.</b> For once, there’s no anger in his tone—only grief.

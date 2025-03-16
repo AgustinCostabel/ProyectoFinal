@@ -16,6 +16,13 @@ public class DialoguesUI : MonoBehaviour
 {
     public static DialoguesUI Instance { get; private set; }
 
+    private const string LUKE = "Luke";
+    private const string ROSE = "Rose";
+    private const string DAREN = "Daren";
+    private const string JUDY = "Judy";
+    private const string SOFIA = "Sofia";
+    private const string REN = "Ren";
+
     [SerializeField] public Button continueButton;
     [SerializeField] public Button endDialogueButton;
     [SerializeField] private GameObject dialogueBox;
@@ -34,6 +41,7 @@ public class DialoguesUI : MonoBehaviour
     private Sprite spriteNPC;
     private Ink.Runtime.Story currentStory;
     private NPC currentNPC;
+    private Boolean isDialogueSpecial = false;
 
     private int sentencesCount = 0;
 
@@ -59,14 +67,15 @@ public class DialoguesUI : MonoBehaviour
         dialogueChoices.SetActiveTrue();
         Player.Instance.SetIsDoingAction(true);
         GameManager.Instance.SetMenuOpened(true);
+        continueButton.gameObject.SetActive(true);
         DialogueContinue();
     }
 
 
     public void DialogueContinue() {
-        continueButton.gameObject.SetActive(false);
+        //continueButton.gameObject.SetActive(false);
         if (currentStory.canContinue) {
-            if (sentencesCount % 2 != 0) {
+            /*if (sentencesCount % 2 != 0) {
                 dialogueImage.sprite = spritePlayer;
                 dialogueTitle.text = titlePlayer;
                 dialogueBox.transform.localPosition = new Vector3(-405, -150, 0);
@@ -75,16 +84,21 @@ public class DialoguesUI : MonoBehaviour
                 dialogueTitle.text = titleNPC;
                 dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
                 currentNPC.PlayVoiceSound();
-            }
+            }*/
+            dialogueImage.sprite = spriteNPC;
+            dialogueTitle.text = titleNPC;
+            //dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
+            currentNPC.PlayVoiceSound();
             dialogueChoices.SetActiveFalse();
             StopAllCoroutines();
             StartCoroutine(TypeSentence(currentStory.Continue()));
             sentencesCount++;
         } else {
-            if (GameStateManager.Instance.IsThirdEvent()) {
+            if (GameStateManager.Instance.IsSecondEvent() && !isDialogueSpecial) {
                 DialogueChoices();
             } else {
                 DialogueEnd();
+                isDialogueSpecial = false;
             }
         }
     }
@@ -111,17 +125,6 @@ public class DialoguesUI : MonoBehaviour
                 dialogueText.text += letter;
                 dialogueText.ForceMeshUpdate(); // Update the mesh for the wiggle effect
                 yield return new WaitForSeconds(speedText / 100);
-            }
-        }
-
-        if (!GameStateManager.Instance.IsThirdEvent()) {
-            continueButton.gameObject.SetActive(true);
-        } else {
-            if (currentStory.canContinue) {
-                continueButton.gameObject.SetActive(true);
-            } else {
-                dialogueChoices.SetActiveTrue();
-                sentencesCount = 0;
             }
         }
     }
@@ -197,6 +200,7 @@ public class DialoguesUI : MonoBehaviour
         Player.Instance.SetIsDoingAction(false);
         GameManager.Instance.SetMenuOpened(false);
         sentencesCount = 0;
+        DeactiveChoices();
     }
 
     public void DialogueChoices() {
@@ -207,11 +211,11 @@ public class DialoguesUI : MonoBehaviour
 
     public void ChangeChoices(TextAsset[] newDialogues, string[] dialogueQuestions) {
         // Clear existing choices
-        dialogueChoices.ClearChoices();
+        // dialogueChoices.ClearChoices();
 
         // Add new choices to the list
         for (int i = 0; i < newDialogues.Length; i++) {
-            dialogueChoices.ActiveChoice(i);
+            //dialogueChoices.ActiveChoice(i);
             dialogueChoices.ChangeChoice(i, newDialogues[i], dialogueQuestions[i]);
         }
     }
@@ -219,6 +223,29 @@ public class DialoguesUI : MonoBehaviour
     public void ChoiceClicked(Choices choice) {
         sentencesCount = 0;
         dialogueChoices.SetActiveFalse();
+        if(titleNPC == DAREN && choice.index == 3) {
+            Player.Instance.ObtainKeyChestWeapon();
+        }
+        if (titleNPC == JUDY && choice.index == 2) {
+            Player.Instance.ObtainMap();
+        }
         DialogueStart(choice.dialogueText, spriteNPC, titleNPC, currentNPC);
+    }
+
+    public void SpecialDialogue() {
+        isDialogueSpecial = true;
+    }
+
+    public void ActivateThirdChoice() {
+        dialogueChoices.ActiveChoice(2);
+    }
+
+    public void ActivateFourChoice() {
+        dialogueChoices.ActiveChoice(3);
+    }
+
+    public void DeactiveChoices() {
+        dialogueChoices.DeactiveChoice(2);
+        dialogueChoices.DeactiveChoice(3);
     }
 }

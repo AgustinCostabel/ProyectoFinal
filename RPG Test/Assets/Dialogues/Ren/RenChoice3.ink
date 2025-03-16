@@ -1,0 +1,2 @@
+<b>So, you found them.</b> He doesn’t seem surprised. <b>Yeah, they’re mine. I ran to the body, wearing full armor, in the rain. Of course, the ground kept the marks.</b> 
+He glances toward the direction of the cabin. <b>The trail leads there? Makes sense. I checked the area before heading back to tell Sofia. I didn’t find anything—or anyone.</b>

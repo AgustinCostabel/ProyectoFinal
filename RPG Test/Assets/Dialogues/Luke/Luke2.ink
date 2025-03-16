@@ -1,1 +1,1 @@
-By the way, Sofia told us she wants to talk with you, you should visit her.
+<b>There's a rumour in town, the chief wants to speak to you. I don't know what can of trouble are you into but if I were you I will be going before you can hear the word...</b> He look at you with expecting big eyes waiting for some reaction, then he put a serious and defetead face. <b>You get the point.</b>

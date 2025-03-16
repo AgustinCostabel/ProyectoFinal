@@ -1,0 +1,2 @@
+<b>Ugh, why do I have to clean this damn place? I sell goods, not sweep floors. Where’s my union rep?</b> There’s the sound of a box being shoved aside, followed by a loud thud.
+<b>Great. Just great. Should be out making money, but noooo, I’m stuck here playing maid. This gig better be paying extra.</b> He grumbles, unaware you’re listening. <b>Seriously… didn’t sign up for this kind of job.</b>

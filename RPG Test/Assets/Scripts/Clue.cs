@@ -37,6 +37,23 @@ public class Clue : MonoBehaviour, I_InteractableObject {
         player.Talk(playerTalk);
     }
 
+    public void Activate() {
+        if (shine.isPlaying) {
+            shine.Stop();
+        }
+        if (obtainable) {
+            obtainable = false;
+            if (isText) {
+                clue.GetComponent<TextMeshProUGUI>().text = clueText;
+            } else {
+                clue.GetComponent<Image>().sprite = clueImage;
+                clue.GetComponent<Tooltip>().ChangeText(clueText);
+            }
+            clueTextBox.AddItem(clue);
+            SoundManager.Instance.PlaySoundClue();
+        }
+    }
+
     public void EnableCanvas() {
         canvas.gameObject.SetActive(true);
     }

@@ -23,15 +23,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material normalLeaves;
     [SerializeField] private Material trunk;
     [SerializeField] private GameObject tree;
-    [SerializeField] private GameObject clueCorpse;
+    [SerializeField] private GameObject[] thingsToDeactivate;
     [SerializeField] private Boolean isNight;
+    [SerializeField] private Boolean isSunset;
     private bool menuOpened = false;
 
     public event EventHandler OnSunrise;
-    public event EventHandler OnNoon;
     public event EventHandler OnSunset;
     public event EventHandler OnNight;
-    public event EventHandler OnDarkNight;
     public event EventHandler OnTimeLapsed;
 
     private void Awake() {
@@ -50,14 +49,22 @@ public class GameManager : MonoBehaviour
 
         MenuUI.Instance.SetTimelineActive(true);
 
-        //clueCorpse.gameObject.SetActive(false);
+        foreach (var t in thingsToDeactivate) {
+            if (t != null) {
+                t.gameObject.SetActive(false);
+            }
+        }
 
         //ChangeTreeMaterial(normalLeaves);
 
         StartGame();
 
-        if (isNight) {
-            OnNight?.Invoke(this, EventArgs.Empty);
+        if (isSunset) {
+            OnSunset?.Invoke(this, EventArgs.Empty);
+        } else {
+            if (isNight) {
+                OnNight?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 
@@ -110,20 +117,24 @@ public class GameManager : MonoBehaviour
 
     public void StartGame() {
         //ChangeTreeMaterial(windLeaves);
-
         gameTimer = gameTimerMax;
 
         UnpauseGame();
 
         MusicManager.Instance.StopSong();
 
-        OnTimeLapsed.Invoke(this, EventArgs.Empty);
+        OnTimeLapsed?.Invoke(this, EventArgs.Empty);
         OnSunrise?.Invoke(this, EventArgs.Empty);
 
         MenuUI.Instance.SetTimelineActive(false);
         Player.Instance.SetIsDoingAction(false);
         WeatherManager.Instance.RainCutsceneStop();
 
+        foreach (var t in thingsToDeactivate) {
+            if (t != null) {
+                t.gameObject.SetActive(true);
+            }
+        }
         //clueCorpse.gameObject.SetActive(true);
 
         //OnNight.Invoke(this, EventArgs.Empty);
@@ -154,8 +165,8 @@ public class GameManager : MonoBehaviour
 
     public void Restart() {
         gameTimer = gameTimerMax;
-        OnTimeLapsed.Invoke(this, EventArgs.Empty);
-        OnSunrise.Invoke(this, EventArgs.Empty);
+        OnTimeLapsed?.Invoke(this, EventArgs.Empty);
+        OnSunrise?.Invoke(this, EventArgs.Empty);
     }
 
     public void PauseGame() {
@@ -190,6 +201,10 @@ public class GameManager : MonoBehaviour
 
     public bool IsNight() {
         return isNight;
+    }
+
+    public bool IsSunset() {
+        return isSunset;
     }
 
     public void SetMenuOpened(bool opened) {

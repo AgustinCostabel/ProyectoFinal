@@ -1,1 +1,1 @@
-﻿
+<b> How's the investigation doing Kerlosch? Don't waste time, remember you have until the end of the day.</b>

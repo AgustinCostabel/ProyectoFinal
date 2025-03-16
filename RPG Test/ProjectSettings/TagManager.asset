@@ -17,6 +17,7 @@ TagManager:
   - WeaponBear
   - Fireball
   - Village-Forest
+  - BearLimit
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - LanternLight
   - Building
   - Labyrinth
-  - 
+  - No Light
   - 
   - 
   - 

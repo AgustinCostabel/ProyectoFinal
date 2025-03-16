@@ -1,0 +1,5 @@
+<b>You’re back! I was starting to get worried, but I’m so glad to see you!</b> Her face lights up as she continues, a proud smile spreading across her face.
+<b>So, guess what I found out? The labyrinth—it was built by my great-grandmother, Kara! Can you believe it?</b> Her excitement grows as she speaks.
+<b>I couldn’t figure out exactly why it was built... but it had to have been for some big purpose, right? Maybe to hide something, or maybe... maybe she was hiding herself.</b> She pauses, her expression softening just for a moment.
+<b>I know it’s all a little overwhelming, but I just know we’re getting closer. I’m so hopeful that you’ll solve this... I’m almost living for it!</b>
+Her eyes gleam with anticipation as she speaks. <b>We’ll get to the bottom of this. I know we will.</b>

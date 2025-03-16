@@ -1,0 +1,4 @@
+<b>Look what I found! A labyrinth! I just couldn’t wait any longer, so I came to explore myself. There’s something about this place that just... calls to me!</b>
+She leans forward slightly, her voice filled with eagerness. <b>But, uh... it’s dark inside, and I heard strange noises.</b> She starts to sweat.<b> So, I’ll wait out here for you. You’ve got to go in though, right? There’s got to be something important in there!</b>
+She starts to look around her pockets, suddenly realizing something. <b>Oh! My handkerchief! I must’ve left it somewhere... But, no matter! We’ve got bigger things to focus on!</b>
+She smiles brightly, almost bouncing on her feet as she continues. <b>This is so exciting. I feel like we’re really close to something big!</b>

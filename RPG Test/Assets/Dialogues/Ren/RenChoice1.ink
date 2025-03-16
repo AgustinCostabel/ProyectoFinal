@@ -1,0 +1,2 @@
+<b>I was on patrol last night… Then I saw something lying on the road.</b> He exhales, looking away for a moment. <b>First, I thought it was just one person, but then… there were two. You, unconscious. And her.</b>
+His voice tightens slightly. <b>I ran to check, but it was too late. I should’ve—I should’ve been faster. Maybe then…</b> He stops himself, shaking his head. <b>Anyway. I don’t know the exact time. It was dark. Completely dark. I’ve never been good at telling the hour—not even now. Clocks just… don’t make sense to me.</b>

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class NPC : MonoBehaviour, I_InteractableObject 
 {
@@ -9,15 +11,20 @@ public class NPC : MonoBehaviour, I_InteractableObject
     [SerializeField] private Quest quest;
     [SerializeField] private TextAsset[] dialoguesIntroduction;
     [SerializeField] private TextAsset[] dialogueBeforeQuestion;
+    [SerializeField] private TextAsset[] dialogueSpecial;
     [SerializeField] private TextAsset[] dialoguesChoices;
     [SerializeField] private string[] questionsText;
     [SerializeField] private Sprite dialogueSprite;
     [SerializeField] private string titleNPC;
     [SerializeField] private GameObject characterBox;
     [SerializeField] private AudioClip[] voice;
+    [SerializeField] private Boolean specialDialogueSunset;
+    [SerializeField] private Boolean specialDialogueNight;
 
     private int dialogueIndex = 0;
     private bool interactable = true;
+    [SerializeField] private bool thirdChoice = false;
+    [SerializeField] private bool fourChoice = false;
 
     public void Interact(Player player) {
         //Rotate to Player
@@ -27,20 +34,31 @@ public class NPC : MonoBehaviour, I_InteractableObject
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 360);
 
         //SoundManager.Instance.PlaySound(voice);
-
-        GameStateManager.Instance.TalkedWith(titleNPC);
         DialoguesUI.Instance.ChangeChoices(dialoguesChoices, questionsText);
+        if (thirdChoice) {
+            DialoguesUI.Instance.ActivateThirdChoice();
+        }
+        if (fourChoice) {
+            DialoguesUI.Instance.ActivateFourChoice();
+        }
 
         //Dialogues
         if (dialoguesIntroduction != null) {
-            if (GameStateManager.Instance.IsFirstEvent()) {
-                DialoguesUI.Instance.DialogueStart(dialoguesIntroduction[dialogueIndex], dialogueSprite, "???", this);
-                characterBox.SetActive(true);
+            if (!GameStateManager.Instance.TalkedWithNPC(titleNPC) || !GameStateManager.Instance.IsSecondEvent()) {
+                GameStateManager.Instance.TalkedWith(titleNPC);
+                DialoguesUI.Instance.DialogueStart(dialoguesIntroduction[dialogueIndex], dialogueSprite, titleNPC, this);
+                //characterBox.SetActive(true);
                 if (dialogueIndex < dialoguesIntroduction.Length - 1) {
                     dialogueIndex++;
                 }
             } else {
-                DialoguesUI.Instance.DialogueStart(dialogueBeforeQuestion[dialogueIndex], dialogueSprite, titleNPC, this);
+                dialogueIndex = 0;
+                if((specialDialogueNight && GameManager.Instance.IsNight()) || (specialDialogueSunset && GameManager.Instance.IsSunset())) {
+                    DialoguesUI.Instance.SpecialDialogue();
+                    DialoguesUI.Instance.DialogueStart(dialogueSpecial[dialogueIndex], dialogueSprite, titleNPC, this);
+                } else {
+                    DialoguesUI.Instance.DialogueStart(dialogueBeforeQuestion[dialogueIndex], dialogueSprite, titleNPC, this);
+                }
             }
         }
     }
@@ -59,6 +77,14 @@ public class NPC : MonoBehaviour, I_InteractableObject
 
     public bool IsInteractable() {
         return interactable;
+    }
+
+    public void ActiveThirdChoice() {
+        thirdChoice = true;
+    }
+
+    public void ActiveFourChoice() {
+        fourChoice = true;
     }
 
     public Quest GetQuest() {

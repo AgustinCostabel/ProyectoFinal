@@ -1,1 +1,1 @@
-﻿
+Oh! Hi! You are feeling better? How can I help you?

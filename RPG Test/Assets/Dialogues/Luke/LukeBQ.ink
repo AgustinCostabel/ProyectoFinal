@@ -1,1 +1,1 @@
-﻿
+<b>Want some goodies?</b> He wink an eye. <b>I have everything for the good price... well, I mean except anything related to killing someone, haha.</b> He laugh awkwardly.

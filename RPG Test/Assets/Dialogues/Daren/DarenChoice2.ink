@@ -1,0 +1,2 @@
+<b>Ashley? No, I mean—Sheila. Wait…</b> His expression hardens, jaw clenching. He exhales sharply before shaking his head.
+<b>We were friends. That’s all. Nothing more to say.</b> His tone makes it clear he doesn’t want to continue the conversation.

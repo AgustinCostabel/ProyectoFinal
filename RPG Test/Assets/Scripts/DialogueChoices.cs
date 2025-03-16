@@ -17,6 +17,10 @@ public class DialogueChoices : MonoBehaviour
         choicesObject[index].SetActive(true);
     }
 
+    public void DeactiveChoice(int index) {
+        choicesObject[index].SetActive(false);
+    }
+
     public void ChangeChoice(int index, TextAsset newDialogues, string dialogueQuestions) {
         choices[index].dialogueText = newDialogues;
         choices[index].GetComponentInChildren<TextMeshProUGUI>().text = dialogueQuestions;

@@ -1,1 +1,1 @@
-After Sofia speak with you, I will answer your questions.
+<b>I want to keep talking with you too!</b> She suddenly stops, her excitement fading as she glances down, fidgeting slightly. <b>Oh… but I guess you should talk to Sofia first. She’d be upset if I kept you too long... I suppose rules are rules...</b>

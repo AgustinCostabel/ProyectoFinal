@@ -1,0 +1,3 @@
+Softly, not looking at you. <b>Sheila… she used to be afraid of the dark, you know?</b> She lets out a quiet chuckle, shaking her head. <b>She always made fun of herself for it, but I could tell she really hated being alone at night.</b> Her fingers tighten around the fabric of her dress.
+<b>I hope… I hope she’s not scared anymore. Wherever she is. I just… I want you to find who did this.</b> She turns to you, her expression unreadable. <b>For her. For you.</b> Her voice catches slightly on the last word.
+<b>You deserve to know the truth… and she deserves justice. And when you do find out who did this… promise me you won’t let them get away with it.</b> There is a decisive almost look in her eyes.

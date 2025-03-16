@@ -1,1 +1,0 @@
-Sofia is waiting. Talk to her.

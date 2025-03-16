@@ -1,0 +1,4 @@
+<b>Are you kidding me?! Who said you could go through my stuff? You think I’m some back-alley thief?!</b> But when he sees our serious face, his anger fades. He exhales sharply, rubbing the back of his neck.
+<b>Alright. Fine. You caught me.</b> He crosses his arms, avoiding our gaze. <b>I found her first, okay? Just lying there in the road. And I saw that necklace and… I mean, what? She wasn’t gonna need it anymore.</b>
+He shifts uncomfortably. <b>Look, I barely knew the girl. And imagine this: a total stranger walks into town and says, ‘Hey everyone, I just found a corpse!’ Guess who’s getting locked up first?</b>
+He sighs. <b>And, uh… while we’re pointing fingers, I gotta ask—why is it that when I got there, it was just her? No sign of you. But somehow, later, they find you unconscious right next to her? Weird, huh?</b>

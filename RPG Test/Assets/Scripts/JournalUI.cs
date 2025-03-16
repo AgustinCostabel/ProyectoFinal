@@ -11,7 +11,7 @@ public class JournalUI : MonoBehaviour
     }
 
     private void GameInput_OnJournalAction(object sender, System.EventArgs e) {
-        if (!GameManager.Instance.IsGamePaused()) {
+        if (!GameManager.Instance.IsGamePaused() && Player.Instance.HasJournal()) {
             if (!journalActivation.gameObject.activeSelf && !GameManager.Instance.GetMenuOpened()) {
                 Show();
                 Player.Instance.SetIsDoingAction(true);

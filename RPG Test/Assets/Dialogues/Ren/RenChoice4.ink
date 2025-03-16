@@ -1,0 +1,2 @@
+<b>You’re still standing. Good.</b> His tone is softer than usual, but it doesn’t last long. <b>Listen… I hope you found something today. Because if this keeps dragging on, they’re going to make a decision. And if we don’t have a killer—</b>
+He exhales, rubbing the back of his neck. <b>I don’t want to be the one who has to carry out the sentence.</b>

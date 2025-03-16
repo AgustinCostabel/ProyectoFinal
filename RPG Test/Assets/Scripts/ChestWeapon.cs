@@ -10,22 +10,21 @@ public class ChestWeapon : MonoBehaviour, I_InteractableObject
     private new Animation animation;
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private Clue clue;
 
 
     private bool opened = false;
     private bool interactable = true;
-    private bool canOpen = false;
 
 
     public void Start() {
         animation = GetComponent<Animation>();
-        canOpen = true;
     }
     public void Interact(Player player) {
-        if (!canOpen) {
+        if (!Player.Instance.GetKeyChestWeapon()) {
             player.Talk("Closed, I need a KEY");
         }
-        if (!opened && !player.IsWalking() &&canOpen) {
+        if (!opened && !player.IsWalking() && Player.Instance.GetKeyChestWeapon()) {
             opened = true;
             animation.Play();
             player.PlayGatherAnimation();
@@ -33,6 +32,8 @@ public class ChestWeapon : MonoBehaviour, I_InteractableObject
             gameObject.layer = LayerMask.NameToLayer("Default");
             interactable = false;
             player.IncreaseHealth();
+            //Clue
+            clue.Activate();
             DisableCanvas();
         }
     }

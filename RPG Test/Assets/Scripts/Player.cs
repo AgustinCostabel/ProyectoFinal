@@ -78,7 +78,11 @@ public class Player : MonoBehaviour, I_HasProgress {
     private Quaternion initialRotation;
     private bool hasKeyMap = true;
     private bool inTown = true;
-    private bool hasMap = false;
+    [SerializeField] private bool keyChestWeapon = false;
+    [SerializeField] private bool hasMap = false;
+    [SerializeField] private bool hasJournal = false;
+    [SerializeField] private bool hasLamp = false;
+    [SerializeField] private GameObject lamp;
 
     private I_InteractableObject selectedObject = null;
 
@@ -118,6 +122,14 @@ public class Player : MonoBehaviour, I_HasProgress {
         Spells.Instance.AddSpell(spellSO4);*/
 
         inTown = true;
+
+        if (hasLamp) {
+            if (lamp != null) {
+                lamp.gameObject.SetActive(true);
+            } else {
+                lamp.gameObject.SetActive(false);
+            }
+        }
 
     }
 
@@ -245,6 +257,11 @@ public class Player : MonoBehaviour, I_HasProgress {
                 inTown = !inTown;
             }
         }
+        if (other.CompareTag("BearLimit")) {
+            Talk("Careful there is a bear near, I need a weapon");
+            GameStateManager.Instance.BearEncounter();
+            other.gameObject.SetActive(false);
+        }
     }
 
     private void HandleMovement() {
@@ -291,7 +308,7 @@ public class Player : MonoBehaviour, I_HasProgress {
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
-        float interactDistance = .75f;
+        float interactDistance = 0.75f;
 
         if (Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, transform.forward, out RaycastHit raycastHit, interactDistance, InteractbleObjectlayerMask)) {
             if (raycastHit.transform.TryGetComponent(out I_InteractableObject interactableObject)) {
@@ -558,6 +575,14 @@ public class Player : MonoBehaviour, I_HasProgress {
         this.lantern = lantern;
     }
 
+    public void ObtainKeyChestWeapon() {
+        keyChestWeapon = true;
+    }
+
+    public bool GetKeyChestWeapon() {
+        return keyChestWeapon;
+    }
+
     public bool HasLantern() {
         return lantern != null;
     }
@@ -574,14 +599,22 @@ public class Player : MonoBehaviour, I_HasProgress {
         return hasMap;
     }
 
-    public bool HasKeyMap() {
-        return hasKeyMap;
+    public void ObtainMap() {
+        hasMap = true;
+    }
+
+    public void ObtainJournal() {
+        hasJournal = true;
+    }
+
+    public bool HasJournal() {
+        return hasJournal;
     }
 
     public void Talk(string text) {
         playerUIText.text = text;
         playerUI.gameObject.SetActive(true);
-        Invoke("StopTalk", 2);
+        Invoke("StopTalk", 3);
     }
 
     public void StopTalk() {
