@@ -83,6 +83,7 @@ public class Player : MonoBehaviour, I_HasProgress {
     [SerializeField] private bool hasJournal = false;
     [SerializeField] private bool hasLamp = false;
     [SerializeField] private GameObject lamp;
+    [SerializeField] private GameObject compass;
 
     private I_InteractableObject selectedObject = null;
 
@@ -308,9 +309,24 @@ public class Player : MonoBehaviour, I_HasProgress {
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
+        Vector3 startPosition = transform.position + Vector3.up * (playerHeight / 10f);  // Mid height of player
+        Vector3 endPosition = startPosition + Vector3.up * playerHeight;  // End position for the capsule's height
+
         float interactDistance = 0.75f;
 
-        if (Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, transform.forward, out RaycastHit raycastHit, interactDistance, InteractbleObjectlayerMask)) {
+
+        //CapsuleCast
+        if (Physics.CapsuleCast(startPosition, endPosition, playerRadius, transform.forward, out RaycastHit raycastHit, interactDistance, InteractbleObjectlayerMask, QueryTriggerInteraction.Ignore)) {
+            //Debug raycast
+            // Draw the capsule's vertical line (from start to end)
+            Debug.DrawLine(startPosition, endPosition, UnityEngine.Color.yellow);  // The capsule's path (vertical line)
+
+            // Draw the capsule cast direction in green (if it hits)
+            Debug.DrawRay(startPosition, transform.forward * interactDistance, UnityEngine.Color.green);  // Direction of the cast
+
+            // Draw a line from the hit point and show the normal at that point (red)
+            Debug.DrawRay(raycastHit.point, raycastHit.normal * 2f, UnityEngine.Color.red);  // Normal at the hit point
+
             if (raycastHit.transform.TryGetComponent(out I_InteractableObject interactableObject)) {
                 SetSelectedObject(interactableObject);
             } else {
@@ -318,6 +334,21 @@ public class Player : MonoBehaviour, I_HasProgress {
             }
         } else {
             SetSelectedObject<I_InteractableObject>(null);
+            //Debug raycast
+            // If no hit, just visualize the capsule's vertical line and direction (no hit, so in red)
+            Debug.DrawLine(startPosition, endPosition, UnityEngine.Color.yellow); // Capsule path
+            Debug.DrawRay(startPosition, transform.forward * interactDistance, UnityEngine.Color.red); // Ray direction
+        }
+
+        //Normal RayCast
+        if (Physics.Raycast(startPosition, transform.forward, out RaycastHit raycastHit2, interactDistance)) {
+            Debug.DrawRay(transform.position, transform.forward * interactDistance, UnityEngine.Color.green);
+
+            if (raycastHit2.transform.TryGetComponent(out I_InteractableObject interactableObject)) {
+                SetSelectedObject(interactableObject);
+            } else {
+                SetSelectedObject<I_InteractableObject>(null);
+            }
         }
     }
 
@@ -609,6 +640,10 @@ public class Player : MonoBehaviour, I_HasProgress {
 
     public bool HasJournal() {
         return hasJournal;
+    }
+
+    public void ObtainCompass() {
+        compass.gameObject.SetActive(true);
     }
 
     public void Talk(string text) {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine.Utility;
 using UnityEngine;
+using static Clue;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class GameStateManager : MonoBehaviour
     private const string JUDY = "Judy";
     private const string SOFIA = "Sofia";
     private const string REN = "Ren";
+
+    private const string FOOTPRINTS = "Footprints";
+    private const string CORPSE = "Corpse";
 
     [SerializeField] private GameObject iara;
     [SerializeField] private Lantern lantern;
@@ -37,6 +41,33 @@ public class GameStateManager : MonoBehaviour
     private bool talkedWithJudy = false;
     private bool talkedWithRen = false;
     private bool talkedWithSofia = false;
+
+    //Missions
+    [SerializeField] private Clue missionWeapon;
+    [SerializeField] private Clue missionBear;
+
+    //Clues
+    [SerializeField] private Clue[] clues;
+
+    private void OnEnable() {
+        foreach (Clue clue in clues) {
+            clue.OnClueInteracted += HandleClueInteraction;
+        }
+    }
+
+    private void HandleClueInteraction(object sender, ClueEventArgs e) {
+        // Get the clue that was interacted with
+        Clue interactedClue = e.InteractedClue;
+
+        // Now you can handle the clue interaction in your game state manager
+        Debug.Log($"Clue {interactedClue.name} was interacted with!");
+
+        // Perform actions based on the interacted clue
+        if (interactedClue.name == FOOTPRINTS) {
+            Debug.Log("Active Ren choice");
+            ren.ActiveThirdChoice();
+        }
+    }
 
     private void Awake() {
         if (Instance != null) {
@@ -64,6 +95,8 @@ public class GameStateManager : MonoBehaviour
         lantern.gameObject.transform.parent = null;
         lantern.gameObject.transform.position = lanternSpawn.position;
         lantern.gameObject.transform.rotation = lanternSpawn.rotation;
+        cemeteryDoorLeft.gameObject.transform.localEulerAngles = new Vector3(0, -90, 0);
+        cemeteryDoorRight.gameObject.transform.localEulerAngles = new Vector3(0, 90, 0);
     }
 
     private void GameManager_OnNight(object sender, System.EventArgs e) {
@@ -73,10 +106,6 @@ public class GameStateManager : MonoBehaviour
         }
         cemeteryDoorLeft.gameObject.transform.localEulerAngles = new Vector3(0, -180, 0);
         cemeteryDoorRight.gameObject.transform.localEulerAngles = new Vector3(0, 180, 0);
-    }
-
-    private void Update() {
-        
     }
 
     public void FirstEvent() {
@@ -157,5 +186,7 @@ public class GameStateManager : MonoBehaviour
 
     public void BearEncounter() {
         daren.ActiveFourChoice();
+        missionWeapon.Activate();
+        missionBear.Activate();
     }
 }

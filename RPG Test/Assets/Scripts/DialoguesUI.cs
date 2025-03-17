@@ -228,6 +228,7 @@ public class DialoguesUI : MonoBehaviour
         }
         if (titleNPC == JUDY && choice.index == 2) {
             Player.Instance.ObtainMap();
+            Player.Instance.ObtainCompass();
         }
         DialogueStart(choice.dialogueText, spriteNPC, titleNPC, currentNPC);
     }
