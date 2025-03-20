@@ -104,6 +104,7 @@ public class Enemy : MonoBehaviour, I_HasProgress {
     private void Death() {
         animator.SetTrigger(DEATH);
         player.KillCount(this);
+        GameStateManager.Instance.UpdateMissionText("Bear", "I killed the BEAR");
         //Destroy(gameObject, 10f);
         isDeath = true;
         MusicManager.Instance.StopSong();

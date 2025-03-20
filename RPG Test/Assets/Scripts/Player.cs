@@ -73,17 +73,21 @@ public class Player : MonoBehaviour, I_HasProgress {
     private bool buffActive = false;
     private int buffDamage = 0;
     private Lantern lantern = null;
-    private bool inGrass = false;
     private Vector3 initialPosition;
     private Quaternion initialRotation;
-    private bool hasKeyMap = true;
-    private bool inTown = true;
+
     [SerializeField] private bool keyChestWeapon = false;
+    [SerializeField] private bool keyChestNecklace = false;
     [SerializeField] private bool hasMap = false;
     [SerializeField] private bool hasJournal = false;
     [SerializeField] private bool hasLamp = false;
+    [SerializeField] private bool hasFishingRope = false;
     [SerializeField] private GameObject lamp;
     [SerializeField] private GameObject compass;
+    [SerializeField] private bool inTown = false;
+    [SerializeField] private bool inForest = false;
+    [SerializeField] private bool inLabyrinth = false;
+    [SerializeField] private bool inGrass = false;
 
     private I_InteractableObject selectedObject = null;
 
@@ -121,8 +125,6 @@ public class Player : MonoBehaviour, I_HasProgress {
         Spells.Instance.AddSpell(spellSO2);
         Spells.Instance.AddSpell(spellSO3);
         Spells.Instance.AddSpell(spellSO4);*/
-
-        inTown = true;
 
         if (hasLamp) {
             if (lamp != null) {
@@ -238,9 +240,10 @@ public class Player : MonoBehaviour, I_HasProgress {
                     }
                 }
                 inTown = !inTown;
+                inForest = !inForest;
             } else {
                 //Music
-                WeatherManager.Instance.PlayJungle();
+                WeatherManager.Instance.StopJungle();
                 MusicManager.Instance.DayNightSong();
                 //Floor
                 inGrass = !inGrass;
@@ -256,11 +259,31 @@ public class Player : MonoBehaviour, I_HasProgress {
                     }
                 }
                 inTown = !inTown;
+                inForest = !inForest;
             }
+        }
+        if (other.CompareTag("Forest-Labyrinth")) {
+            if (inForest) {
+                WeatherManager.Instance.StopJungle();
+                MusicManager.Instance.LabyrinthSong();
+            } else {
+                WeatherManager.Instance.PlayJungle();
+                MusicManager.Instance.DayNightSong();
+            }
+            inGrass = !inGrass;
+            inLabyrinth = !inLabyrinth;
+            inForest = !inForest;
         }
         if (other.CompareTag("BearLimit")) {
             Talk("Careful there is a bear near, I need a weapon");
             GameStateManager.Instance.BearEncounter();
+            other.gameObject.SetActive(false);
+        }
+        if (other.CompareTag("LabyrinthLimit")) {
+            if (!HasLantern()) {
+                Talk("A huge structure. Is dark inside, I will need a LIGHT");
+            }
+            GameStateManager.Instance.LabyrinthEncounter();
             other.gameObject.SetActive(false);
         }
     }
@@ -606,6 +629,10 @@ public class Player : MonoBehaviour, I_HasProgress {
         this.lantern = lantern;
     }
 
+    public bool HasLantern() {
+        return this.lantern != null;
+    }
+
     public void ObtainKeyChestWeapon() {
         keyChestWeapon = true;
     }
@@ -614,8 +641,12 @@ public class Player : MonoBehaviour, I_HasProgress {
         return keyChestWeapon;
     }
 
-    public bool HasLantern() {
-        return lantern != null;
+    public void ObtainKeyChestNecklace() {
+        keyChestNecklace = true;
+    }
+
+    public bool GetKeyChestNecklace() {
+        return keyChestNecklace;
     }
 
     public Sprite GetSpritePlayer() {
@@ -640,6 +671,14 @@ public class Player : MonoBehaviour, I_HasProgress {
 
     public bool HasJournal() {
         return hasJournal;
+    }
+
+    public void ObtainFishingRope() {
+        hasFishingRope = true;
+    }
+
+    public bool HasFishingRope() {
+        return hasFishingRope;
     }
 
     public void ObtainCompass() {

@@ -10,4 +10,7 @@ public class AudioClipsSO : ScriptableObject
     public AudioClip death;
     public AudioClip clue;
     public AudioClip buttonPress;
+    public AudioClip secretDoor;
+    public AudioClip stonePush;
+    public AudioClip thunder;
 }

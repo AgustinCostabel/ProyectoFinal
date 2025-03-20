@@ -37,7 +37,9 @@ public class Clue : MonoBehaviour, I_InteractableObject {
                     player.Talk(clueText);
                     clue.GetComponent<Image>().sprite = clueImage;
                     clue.GetComponent<Tooltip>().ChangeText(tooltipText);
-                    clueTextBox.AddItem(clue);
+                    clueTextBox.AddItem(clue, this.name);
+                    SoundManager.Instance.PlaySoundClue();
+                    DisableCanvas();
                 }
             }
         }
@@ -53,11 +55,20 @@ public class Clue : MonoBehaviour, I_InteractableObject {
                 clue.GetComponent<TextMeshProUGUI>().text = clueText;
             } else {
                 clue.GetComponent<Image>().sprite = clueImage;
-                clue.GetComponent<Tooltip>().ChangeText(clueText);
+                clue.GetComponent<Tooltip>().ChangeText(tooltipText);
             }
-            clueTextBox.AddItem(clue);
+            clueTextBox.AddItem(clue, this.name);
             SoundManager.Instance.PlaySoundClue();
         }
+    }
+
+    public void Deactivate() {
+        interactable = false;
+        DisableCanvas();
+    }
+
+    public void ChangePlayerTalkText(string text) {
+        clueText = text;
     }
 
     public void EnableCanvas() {

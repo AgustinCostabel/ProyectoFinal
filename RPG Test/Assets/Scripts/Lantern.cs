@@ -19,6 +19,7 @@ public class Lantern : MonoBehaviour, I_InteractableObject{
         lantern.lanternLight.transform.localEulerAngles = new Vector3(250, 0, 0);
         lantern.lanternLight.gameObject.SetActive(true);
         lantern.canvas.gameObject.SetActive(false);
+        GameManager.Instance.Sunset();
         Destroy(gameObject);
         interactable = false;
     }

@@ -5,8 +5,7 @@ using System.Net;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class WeatherManager : MonoBehaviour
-{
+public class WeatherManager : MonoBehaviour {
     public static WeatherManager Instance;
 
     [SerializeField] private ParticleSystem rainParticles;
@@ -22,8 +21,7 @@ public class WeatherManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
+    void Start() {
         GameManager.Instance.OnNight += GameManager_OnNight;
         GameManager.Instance.OnSunrise += GameManager_OnSunrise;
 
@@ -54,10 +52,14 @@ public class WeatherManager : MonoBehaviour
     }
 
     public void PlayJungle() {
-        if (jungleSound.isPlaying) {
-            jungleSound.Stop();
-        } else {
+        if (!jungleSound.isPlaying) {
             jungleSound.Play();
         }
     }
+
+    public void StopJungle() {
+        if (jungleSound.isPlaying) {
+            jungleSound.Stop();
+        }
+    } 
 }

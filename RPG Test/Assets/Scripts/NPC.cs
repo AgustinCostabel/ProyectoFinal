@@ -44,7 +44,8 @@ public class NPC : MonoBehaviour, I_InteractableObject
 
         //Dialogues
         if (dialoguesIntroduction != null) {
-            if (!GameStateManager.Instance.TalkedWithNPC(titleNPC) || !GameStateManager.Instance.IsSecondEvent()) {
+            if ((!GameStateManager.Instance.TalkedWithNPC(titleNPC) || !GameStateManager.Instance.IsSecondEvent()) && !GameManager.Instance.IsSunset() && !GameManager.Instance.IsNight()) {
+                //Intro dialogue
                 GameStateManager.Instance.TalkedWith(titleNPC);
                 DialoguesUI.Instance.DialogueStart(dialoguesIntroduction[dialogueIndex], dialogueSprite, titleNPC, this);
                 //characterBox.SetActive(true);
@@ -54,9 +55,11 @@ public class NPC : MonoBehaviour, I_InteractableObject
             } else {
                 dialogueIndex = 0;
                 if((specialDialogueNight && GameManager.Instance.IsNight()) || (specialDialogueSunset && GameManager.Instance.IsSunset())) {
+                    //Special dialogue
                     DialoguesUI.Instance.SpecialDialogue();
                     DialoguesUI.Instance.DialogueStart(dialogueSpecial[dialogueIndex], dialogueSprite, titleNPC, this);
                 } else {
+                    //BQ dialogue
                     DialoguesUI.Instance.DialogueStart(dialogueBeforeQuestion[dialogueIndex], dialogueSprite, titleNPC, this);
                 }
             }

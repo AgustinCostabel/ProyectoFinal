@@ -23,18 +23,21 @@ public class ChestWeapon : MonoBehaviour, I_InteractableObject
     public void Interact(Player player) {
         if (!Player.Instance.GetKeyChestWeapon()) {
             player.Talk("Closed, I need a KEY");
-        }
-        if (!opened && !player.IsWalking() && Player.Instance.GetKeyChestWeapon()) {
-            opened = true;
-            animation.Play();
-            player.PlayGatherAnimation();
-            Weapons.SpawnWeapon(weaponSO, player, this);
-            gameObject.layer = LayerMask.NameToLayer("Default");
-            interactable = false;
-            player.IncreaseHealth();
-            //Clue
-            clue.Activate();
-            DisableCanvas();
+        } else {
+            if (!opened && !player.IsWalking()) {
+                player.Talk("This sword should work");
+                opened = true;
+                animation.Play();
+                player.PlayGatherAnimation();
+                Weapons.SpawnWeapon(weaponSO, player, this);
+                gameObject.layer = LayerMask.NameToLayer("Default");
+                interactable = false;
+                player.IncreaseHealth();
+                //Clue
+                clue.Activate();
+                DisableCanvas();
+                GameStateManager.Instance.UpdateMissionText("Weapon", "I got a SWORD");
+            }
         }
     }
 

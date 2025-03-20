@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material trunk;
     [SerializeField] private GameObject tree;
     [SerializeField] private GameObject[] thingsToDeactivate;
-    [SerializeField] private Boolean isNight;
-    [SerializeField] private Boolean isSunset;
+    [SerializeField] private bool isSunset;
+    [SerializeField] private bool isNight;
     private bool menuOpened = false;
 
     public event EventHandler OnSunrise;
@@ -45,17 +45,17 @@ public class GameManager : MonoBehaviour
 
         gameTimer = gameTimerMax;
 
-        OnNight?.Invoke(this, EventArgs.Empty);   
+        //OnNight?.Invoke(this, EventArgs.Empty);   
 
         MenuUI.Instance.SetTimelineActive(true);
 
+        //ChangeTreeMaterial(normalLeaves);
         foreach (var t in thingsToDeactivate) {
-            if (t != null) {
+            if (t != null && t.gameObject != null) // Ensure 't' and its 'gameObject' are not null
+            {
                 t.gameObject.SetActive(false);
             }
         }
-
-        //ChangeTreeMaterial(normalLeaves);
 
         StartGame();
 
@@ -131,7 +131,8 @@ public class GameManager : MonoBehaviour
         WeatherManager.Instance.RainCutsceneStop();
 
         foreach (var t in thingsToDeactivate) {
-            if (t != null) {
+            if (t != null && t.gameObject != null) // Ensure 't' and its 'gameObject' are not null
+            {
                 t.gameObject.SetActive(true);
             }
         }
@@ -166,7 +167,6 @@ public class GameManager : MonoBehaviour
     public void Restart() {
         gameTimer = gameTimerMax;
         OnTimeLapsed?.Invoke(this, EventArgs.Empty);
-        OnSunrise?.Invoke(this, EventArgs.Empty);
     }
 
     public void PauseGame() {
@@ -212,10 +212,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void CallNight() {
+        isNight = true;
         OnNight?.Invoke(this, EventArgs.Empty);
     }
 
     public void Sunset() {
+        isSunset = true;
         OnSunset?.Invoke(this, EventArgs.Empty);
     }
 }

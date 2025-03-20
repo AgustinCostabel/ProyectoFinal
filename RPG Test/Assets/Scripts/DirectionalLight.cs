@@ -14,13 +14,19 @@ public class DirectionalLight : MonoBehaviour
     private new Light light;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float rotationSpeedSkybox;
-    [SerializeField] private float rotationX = 45f;
-    [SerializeField] private float rotationY = 45f;
+    //[SerializeField] private float rotationX = 45f;
+    //[SerializeField] private float rotationY = 45f;
     public bool direction = true;
 
-    private float lerpTime;
+    [SerializeField] private float lerpTime;
     [SerializeField] private Color[] skyColors;
-    private float t = 0f;
+    private Color sunsetColor;
+    private Color nightColor;
+    //private int nextColor = 2;
+    private float t = 0;
+
+    private bool isSunset = false;
+    private bool isNight = false;
 
     private void Awake() {
         Instance = this;
@@ -39,29 +45,46 @@ public class DirectionalLight : MonoBehaviour
         RenderSettings.skybox.SetColor("_Tint", new Color32(10, 10, 10, 1));
 
         light.color = skyColors[4];
+
+        sunsetColor = skyColors[2];
+        nightColor = skyColors[4];
     }
 
     void Update() {
-        /*transform.localEulerAngles = new Vector3(rotationX, rotationY, 0);
-        RenderSettings.skybox.SetFloat("_Rotation", Time.time * rotationSpeedSkybox);
+        if (isSunset) {
+            light.color = Color.Lerp(light.color, sunsetColor, lerpTime * Time.deltaTime);
+            t = Mathf.Lerp(t, 1f, lerpTime * Time.deltaTime);
 
-        light.color = Color.Lerp(light.color, skyColors[nextColor], lerpTime * Time.deltaTime);
+            if (t > .9f) {
+                t = 0f;
 
-        t = Mathf.Lerp(t,1f,lerpTime * Time.deltaTime);
-        if(t > .9f) {
-            t = 0f;
-            if (nextColor == 4) {
-                nextColor = 0;
-            } else {
-                nextColor++;
+                // Check if the colors are close enough
+                if (Vector4.Distance(light.color, sunsetColor) < 0.01f) {
+                    light.color = sunsetColor; // Ensure exact match
+                    isSunset = false;
+                }
             }
-        }*/
+        }
+
+        if (isNight) {
+            light.color = Color.Lerp(light.color, nightColor, lerpTime * Time.deltaTime);
+            t = Mathf.Lerp(t, 1f, lerpTime * Time.deltaTime);
+
+            if (t > .9f) {
+                t = 0f;
+
+                // Check if the colors are close enough
+                if (Vector4.Distance(light.color, nightColor) < 0.01f) {
+                    light.color = nightColor; // Ensure exact match
+                    isNight = false;
+                }
+            }
+        }
     }
 
     private void GameManager_OnTimeLapsed(object sender, EventArgs e) {
         RenderSettings.skybox.SetColor("_Tint", new Color32(120, 120, 120, 1));
         light.color = new Color32(255, 240, 200, 1);
-        t = 0f;
     }
 
     private void GameManager_OnSunrise(object sender, System.EventArgs e) {
@@ -72,14 +95,18 @@ public class DirectionalLight : MonoBehaviour
 
     private void GameManager_OnSunset(object sender, System.EventArgs e) {
         RenderSettings.skybox.SetColor("_Tint", new Color32(125, 125, 125, 1));
-        light.color = skyColors[2];
+        //light.color = skyColors[2];
         light.intensity = 3f;
+
+        isSunset = true;
     }
 
     private void GameManager_OnNight(object sender, System.EventArgs e) {
         RenderSettings.skybox.SetColor("_Tint", new Color32(0, 0, 0, 1));
-        light.color = skyColors[4];
+        //light.color = skyColors[4];
         light.intensity = 1f;
+
+        isNight = true;
     }
 
 

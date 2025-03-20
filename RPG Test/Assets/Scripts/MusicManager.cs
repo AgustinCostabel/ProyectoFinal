@@ -7,6 +7,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioClip musicDay;
     [SerializeField] private AudioClip musicNight;
     [SerializeField] private AudioClip musicFight;
+    [SerializeField] private AudioClip musicLabyrinth;
     public static MusicManager Instance { get; private set; }
 
     private AudioSource audioSource;
@@ -34,10 +35,15 @@ public class MusicManager : MonoBehaviour
     }
 
     private void GameManager_OnNight(object sender, System.EventArgs e) {
-        if (audioSource != null && songPlaying != musicFight) {
+        /*if (audioSource != null && songPlaying != musicFight) {
             StopAllCoroutines();
             StartCoroutine(ChangeSong(musicNight));
-        }
+        }*/
+    }
+
+    public void LabyrinthSong() {
+        StopAllCoroutines();
+        StartCoroutine(ChangeSong(musicLabyrinth));
     }
 
     public void FightSong() {

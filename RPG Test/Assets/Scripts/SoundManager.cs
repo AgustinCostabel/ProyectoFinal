@@ -70,8 +70,19 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioClipsSO.clue, Camera.main.transform.position, 0.7f);
     }
 
+    public void PlaySoundSecretDoor() {
+        PlaySound(audioClipsSO.secretDoor, Camera.main.transform.position, 0.7f);
+    }
+
+    public void PlaySoundStonePush() {
+        PlaySound(audioClipsSO.stonePush, Camera.main.transform.position, 0.7f);
+    }
+
     public void PlaySoundButton() {
         PlaySound(audioClipsSO.buttonPress, Camera.main.transform.position, 0.7f);
+    }
+    public void PlaySoundThunder() {
+        PlaySound(audioClipsSO.thunder, Camera.main.transform.position, 0.7f);
     }
 
     public void PlaySound(AudioClip[] audioClipArray) {

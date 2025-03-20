@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine.Utility;
+using TMPro;
 using UnityEngine;
 using static Clue;
 
-public class GameStateManager : MonoBehaviour
-{
+public class GameStateManager : MonoBehaviour {
     public static GameStateManager Instance { get; private set; }
 
     private const string LUKE = "Luke";
@@ -17,6 +17,20 @@ public class GameStateManager : MonoBehaviour
 
     private const string FOOTPRINTS = "Footprints";
     private const string CORPSE = "Corpse";
+    private const string WELL = "Well";
+    private const string FISHINGROPE = "FishingRope";
+    private const string WEARDROBE = "Weardrobe";
+    private const string FIREPLACE = "Fireplace";
+    private const string BED = "Bed";
+    private const string PAINTING = "Painting";
+    private const string KEY = "Key";
+    private const string CORPSECAVE = "CorpseCave";
+    private const string PILLARSTONE1 = "PillarStone1";
+    private const string PILLARSTONE2 = "PillarStone2";
+    private const string PILLARSTONE3 = "PillarStone3";
+    private const string PILLARSTONE4 = "PillarStone4";
+    private const string BOOK = "Book";
+    private const string LOVEPOTION = "LovePotion";
 
     [SerializeField] private GameObject iara;
     [SerializeField] private Lantern lantern;
@@ -30,6 +44,13 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameObject secretFence;
     [SerializeField] private GameObject cemeteryDoorLeft;
     [SerializeField] private GameObject cemeteryDoorRight;
+    [SerializeField] private GameObject towerDoor;
+    [SerializeField] private GameObject secretDoor;
+    [SerializeField] private GameObject vaseFire1;
+    [SerializeField] private GameObject vaseFire2;
+    [SerializeField] private GameObject vaseFire3;
+    [SerializeField] private GameObject vaseFire4;
+    [SerializeField] private GameObject sheilaCorpse;
 
     [SerializeField] private bool isFirstEvent = false;
     [SerializeField] private bool isSecondEvent = false;
@@ -42,12 +63,22 @@ public class GameStateManager : MonoBehaviour
     private bool talkedWithRen = false;
     private bool talkedWithSofia = false;
 
+    private int activatedStones = 0;
+    private bool activateLabyrinthSecretDoor;
+
     //Missions
+    [SerializeField] private GameObject missions;
+
     [SerializeField] private Clue missionWeapon;
     [SerializeField] private Clue missionBear;
+    [SerializeField] private Clue missionLabyrinth;
 
     //Clues
     [SerializeField] private Clue[] clues;
+    [SerializeField] private Clue ringS;
+    [SerializeField] private Clue ringD;
+    [SerializeField] private Clue well;
+    [SerializeField] private Clue key;
 
     private void OnEnable() {
         foreach (Clue clue in clues) {
@@ -67,6 +98,83 @@ public class GameStateManager : MonoBehaviour
             Debug.Log("Active Ren choice");
             ren.ActiveThirdChoice();
         }
+        if (interactedClue.name == FISHINGROPE) {
+            Player.Instance.ObtainFishingRope();
+            well.ChangePlayerTalkText("A couple of golden rings");
+        }
+        if (interactedClue.name == WELL) {
+            if (Player.Instance.HasFishingRope()) {
+                interactedClue.gameObject.SetActive(false);
+                ringS.Activate();
+                ringD.Activate();
+                daren.ActiveThirdChoice();
+            }
+        }
+        if (interactedClue.name == WEARDROBE || interactedClue.name == FIREPLACE || interactedClue.name == BED) {
+            sofia.ActiveThirdChoice();
+        }
+        if (interactedClue.name == PAINTING) {
+            key.gameObject.SetActive(true);
+        }
+        if (interactedClue.name == KEY) {
+            Player.Instance.ObtainKeyChestNecklace();
+        }
+        if (interactedClue.name == CORPSE) {
+            interactedClue.Deactivate();
+            UpdateMissionText("Corpse", "The corpse has no visible wounds");
+        }
+        if (interactedClue.name == PILLARSTONE1) {
+            Debug.Log("Stone 1 Activated");
+            vaseFire1.gameObject.SetActive(true);
+            interactedClue.Deactivate();
+            SoundManager.Instance.PlaySoundStonePush();
+            activatedStones++;
+            if (activatedStones == 4) {
+                SoundManager.Instance.PlaySoundSecretDoor();
+                secretDoor.gameObject.SetActive(false);
+            }
+        }
+        if (interactedClue.name == PILLARSTONE2) {
+            Debug.Log("Stone 2 Activated");
+            vaseFire2.gameObject.SetActive(true);
+            interactedClue.Deactivate();
+            SoundManager.Instance.PlaySoundStonePush();
+            activatedStones++;
+            if (activatedStones == 4) {
+                SoundManager.Instance.PlaySoundSecretDoor();
+                secretDoor.gameObject.SetActive(false);
+            }
+        }
+        if (interactedClue.name == PILLARSTONE3) {
+            Debug.Log("Stone 3 Activated");
+            vaseFire3.gameObject.SetActive(true);
+            interactedClue.Deactivate();
+            SoundManager.Instance.PlaySoundStonePush();
+            activatedStones++;
+            if (activatedStones == 4) {
+                SoundManager.Instance.PlaySoundSecretDoor();
+                secretDoor.gameObject.SetActive(false);
+            }
+        }
+        if (interactedClue.name == PILLARSTONE4) {
+            Debug.Log("Stone 4 Activated");
+            vaseFire4.gameObject.SetActive(true);
+            interactedClue.Deactivate();
+            SoundManager.Instance.PlaySoundStonePush();
+            activatedStones++;
+            if(activatedStones == 4) {
+                SoundManager.Instance.PlaySoundSecretDoor();
+                secretDoor.gameObject.SetActive(false);
+            }
+        }
+        if (interactedClue.name == BOOK) {
+            GameManager.Instance.CallNight();
+            SoundManager.Instance.PlaySoundThunder();
+            GameStateManager.Instance.UpdateMissionText("Labyrinth", "I found a BOOK");
+        }
+        if (interactedClue.name == LOVEPOTION) {
+            rose.ActiveThirdChoice();
+        }
     }
 
     private void Awake() {
@@ -79,7 +187,8 @@ public class GameStateManager : MonoBehaviour
             Debug.LogError("GameManager instance is null!");
         } else {
             GameManager.Instance.OnSunrise += GameManager_OnSunrise;
-            GameManager.Instance.OnSunrise += GameManager_OnNight;
+            GameManager.Instance.OnSunset += GameManager_OnSunset;
+            GameManager.Instance.OnNight += GameManager_OnNight;
         }
     }
 
@@ -99,13 +208,49 @@ public class GameStateManager : MonoBehaviour
         cemeteryDoorRight.gameObject.transform.localEulerAngles = new Vector3(0, 90, 0);
     }
 
+    private void GameManager_OnSunset(object sender, System.EventArgs e) {
+
+        //NPC
+        judy.transform.position = new Vector3(215, 10, 165);
+        judy.transform.localEulerAngles = new Vector3(0, 0, 0);
+        judy.ActiveFourChoice();
+
+        ren.transform.position = new Vector3(70, 10, 195);
+        ren.transform.localEulerAngles = new Vector3(0, -90, 0);
+
+        rose.transform.position = new Vector3(90, 10, 245);
+
+        sheilaCorpse.gameObject.SetActive(false);
+    }
+
     private void GameManager_OnNight(object sender, System.EventArgs e) {
-        if (isThirdEvent) {
-            secretFence.gameObject.transform.localEulerAngles = new Vector3(-90, 0, -110);
-            rose.gameObject.transform.position = new Vector3(0, 0, 0);
-        }
+        secretFence.gameObject.transform.localEulerAngles = new Vector3(-90, 0, -120);
         cemeteryDoorLeft.gameObject.transform.localEulerAngles = new Vector3(0, -180, 0);
         cemeteryDoorRight.gameObject.transform.localEulerAngles = new Vector3(0, 180, 0);
+        towerDoor.gameObject.SetActive(true);
+
+        //NPC
+        judy.transform.position = new Vector3(208, 10, 253);
+        judy.transform.localEulerAngles = new Vector3(0, 180, 0);
+
+        ren.transform.position = new Vector3(172, 10, 235);
+        ren.transform.localEulerAngles = new Vector3(0, -90, 0);
+
+        daren.transform.position = new Vector3(158.8f, 10, 318.6f);
+        daren.transform.localEulerAngles = new Vector3(0, 61, 0);
+
+        rose.transform.position = new Vector3(252, 10, 233.5f);
+        rose.transform.localEulerAngles = new Vector3(0, 125, 0);
+        rose.ActiveFourChoice();
+
+        sofia.transform.position = new Vector3(253f, 10, 231.7f);
+        sofia.transform.localEulerAngles = new Vector3(0, 90, 0);
+
+        luke.transform.position = new Vector3(132.65f, 10.8f, 163.95f);
+        luke.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+        //sheilaCorpse.gameObject.SetActive(true);
+
     }
 
     public void FirstEvent() {
@@ -188,5 +333,29 @@ public class GameStateManager : MonoBehaviour
         daren.ActiveFourChoice();
         missionWeapon.Activate();
         missionBear.Activate();
+    }
+
+    public void LabyrinthEncounter() {
+        missionLabyrinth.Activate();
+    }
+
+    public void NecklaceObtained() {
+        luke.ActiveThirdChoice();
+    }
+
+    public void UpdateMissionText(string missionName, string newText) {
+        Debug.Log("Updating Mission");
+        TMP_Text[] textObjects = missions.GetComponentsInChildren<TMP_Text>(); // Creates the array
+
+        foreach (TMP_Text text in textObjects) {
+            if (text.name == missionName) {
+                text.text = newText;
+                text.color = new Color32(255, 215, 0, 255);
+                SoundManager.Instance.PlaySoundClue();
+                break; // Stop loop after finding the mission
+            }
+        }
+
+        // Array will be automatically deleted by the garbage collector
     }
 }

@@ -18,6 +18,8 @@ TagManager:
   - Fireball
   - Village-Forest
   - BearLimit
+  - LabyrinthLimit
+  - Forest-Labyrinth
   layers:
   - Default
   - TransparentFX

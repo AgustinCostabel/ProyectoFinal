@@ -31,3 +31,6 @@ MonoBehaviour:
   death: {fileID: 8300000, guid: 35ce408210dfa9843ba14da86f8efb4e, type: 3}
   clue: {fileID: 8300000, guid: 5a88b745c08929a40b58e442fafe4ec5, type: 3}
   buttonPress: {fileID: 8300000, guid: 0449722d568ea0046a86a3056d35bffd, type: 3}
+  secretDoor: {fileID: 8300000, guid: 070779cdcfbe3ff4688691fb33bc3e4e, type: 3}
+  stonePush: {fileID: 8300000, guid: 0fec56ba575d4af47838c28122d4ece8, type: 3}
+  thunder: {fileID: 8300000, guid: a100ee4fe5acdae4e8310d12e9d2ca0b, type: 3}
