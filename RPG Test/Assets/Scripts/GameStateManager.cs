@@ -32,7 +32,7 @@ public class GameStateManager : MonoBehaviour {
     private const string BOOK = "Book";
     private const string LOVEPOTION = "LovePotion";
 
-    [SerializeField] private GameObject iara;
+    [SerializeField] private GameObject sheila;
     [SerializeField] private Lantern lantern;
     [SerializeField] private NPC sofia;
     [SerializeField] private NPC rose;
@@ -41,11 +41,14 @@ public class GameStateManager : MonoBehaviour {
     [SerializeField] private NPC judy;
     [SerializeField] private NPC ren;
     [SerializeField] private Transform lanternSpawn;
+    [SerializeField] private GameObject fakeWall;
     [SerializeField] private GameObject secretFence;
     [SerializeField] private GameObject cemeteryDoorLeft;
     [SerializeField] private GameObject cemeteryDoorRight;
     [SerializeField] private GameObject towerDoor;
     [SerializeField] private GameObject secretDoor;
+    [SerializeField] private GameObject lakeFenceLeft;
+    [SerializeField] private GameObject lakeFenceRight;
     [SerializeField] private GameObject vaseFire1;
     [SerializeField] private GameObject vaseFire2;
     [SerializeField] private GameObject vaseFire3;
@@ -72,6 +75,7 @@ public class GameStateManager : MonoBehaviour {
     [SerializeField] private Clue missionWeapon;
     [SerializeField] private Clue missionBear;
     [SerializeField] private Clue missionLabyrinth;
+    [SerializeField] private Clue missionDiary;
 
     //Clues
     [SerializeField] private Clue[] clues;
@@ -79,6 +83,8 @@ public class GameStateManager : MonoBehaviour {
     [SerializeField] private Clue ringD;
     [SerializeField] private Clue well;
     [SerializeField] private Clue key;
+    [SerializeField] private Clue lakeFence;
+    [SerializeField] private Clue cemetery;
 
     private void OnEnable() {
         foreach (Clue clue in clues) {
@@ -228,6 +234,7 @@ public class GameStateManager : MonoBehaviour {
         cemeteryDoorLeft.gameObject.transform.localEulerAngles = new Vector3(0, -180, 0);
         cemeteryDoorRight.gameObject.transform.localEulerAngles = new Vector3(0, 180, 0);
         towerDoor.gameObject.SetActive(true);
+        cemetery.gameObject.SetActive(false);
 
         //NPC
         judy.transform.position = new Vector3(208, 10, 253);
@@ -265,6 +272,7 @@ public class GameStateManager : MonoBehaviour {
         judy.ActiveThirdChoice();
         rose.gameObject.transform.position = new Vector3(225, 10, 227);
         ren.gameObject.transform.position = new Vector3(175, 10, 235);
+        fakeWall.gameObject.SetActive(false);
     }
 
     public void ThirdEvent() {
@@ -341,6 +349,22 @@ public class GameStateManager : MonoBehaviour {
 
     public void NecklaceObtained() {
         luke.ActiveThirdChoice();
+    }
+
+    public void FirstEntrieActivated() {
+        Debug.Log("First entrie activated");
+        missionDiary.Activate();
+    }
+
+    public void SecondEntrieActivated() {
+        sofia.ActiveFourChoice();
+    }
+
+    public void FifthEntrieActivated() {
+        lakeFenceLeft.transform.localEulerAngles = new Vector3(0, -90, 0);
+        lakeFenceRight.transform.localEulerAngles = new Vector3(0, 90, 0);
+        lakeFence.gameObject.SetActive(false);
+        UpdateMissionText("Diary", "I found all the Diary entries");
     }
 
     public void UpdateMissionText(string missionName, string newText) {

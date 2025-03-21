@@ -226,41 +226,43 @@ public class Player : MonoBehaviour, I_HasProgress {
                 //Music
                 WeatherManager.Instance.PlayJungle();
                 MusicManager.Instance.StopSong();
-                //Floor
-                inGrass = !inGrass;
                 //Lights
-                foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
-                    if (lightsTown != null) {
-                        lightsTown.GetComponent<Light>().enabled = false;
+                if (GameManager.Instance.IsNight()) {
+                    Debug.Log("Changing Lights");
+                    foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
+                        if (lightsTown != null) {
+                            lightsTown.GetComponent<Light>().enabled = false;
+                        }
+                    }
+                    foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
+                        if (lightsVillage != null) {
+                            lightsVillage.GetComponent<Light>().enabled = true;
+                        }
                     }
                 }
-                foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
-                    if (lightsVillage != null) {
-                        lightsVillage.GetComponent<Light>().enabled = true;
-                    }
-                }
-                inTown = !inTown;
-                inForest = !inForest;
             } else {
                 //Music
                 WeatherManager.Instance.StopJungle();
                 MusicManager.Instance.DayNightSong();
-                //Floor
-                inGrass = !inGrass;
                 //Lights
-                foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
-                    if (lightsTown != null) {
-                        lightsTown.GetComponent<Light>().enabled = true;
+                if (GameManager.Instance.IsNight()) {
+                    Debug.Log("Changing Lights");
+                    foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
+                        if (lightsTown != null) {
+                            lightsTown.GetComponent<Light>().enabled = true;
+                        }
+                    }
+                    foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
+                        if (lightsVillage != null) {
+                            lightsVillage.GetComponent<Light>().enabled = false;
+                        }
                     }
                 }
-                foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
-                    if (lightsVillage != null) {
-                        lightsVillage.GetComponent<Light>().enabled = false;
-                    }
-                }
-                inTown = !inTown;
-                inForest = !inForest;
             }
+            //Floor
+            inGrass = !inGrass;
+            inTown = !inTown;
+            inForest = !inForest;
         }
         if (other.CompareTag("Forest-Labyrinth")) {
             if (inForest) {

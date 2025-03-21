@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] thingsToDeactivate;
     [SerializeField] private bool isSunset;
     [SerializeField] private bool isNight;
+    [SerializeField] private bool startGame;
     private bool menuOpened = false;
 
     public event EventHandler OnSunrise;
@@ -57,7 +58,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        StartGame();
+        if (startGame) {
+            StartGame();
+        }
 
         if (isSunset) {
             OnSunset?.Invoke(this, EventArgs.Empty);
