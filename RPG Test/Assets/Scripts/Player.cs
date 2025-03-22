@@ -228,7 +228,6 @@ public class Player : MonoBehaviour, I_HasProgress {
                 MusicManager.Instance.StopSong();
                 //Lights
                 if (GameManager.Instance.IsNight()) {
-                    Debug.Log("Changing Lights");
                     foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
                         if (lightsTown != null) {
                             lightsTown.GetComponent<Light>().enabled = false;
@@ -246,7 +245,6 @@ public class Player : MonoBehaviour, I_HasProgress {
                 MusicManager.Instance.DayNightSong();
                 //Lights
                 if (GameManager.Instance.IsNight()) {
-                    Debug.Log("Changing Lights");
                     foreach (GameObject lightsTown in LightsSwitch.Instance.GetLightsTown()) {
                         if (lightsTown != null) {
                             lightsTown.GetComponent<Light>().enabled = true;
@@ -274,6 +272,16 @@ public class Player : MonoBehaviour, I_HasProgress {
             }
             inGrass = !inGrass;
             inLabyrinth = !inLabyrinth;
+            inForest = !inForest;
+        }
+        if (other.CompareTag("Forest-Lake")) {
+            if (inForest) {
+                WeatherManager.Instance.StopJungle();
+                MusicManager.Instance.LakeSong();
+            } else {
+                WeatherManager.Instance.PlayJungle();
+                MusicManager.Instance.DayNightSong();
+            }
             inForest = !inForest;
         }
         if (other.CompareTag("BearLimit")) {
@@ -455,6 +463,10 @@ public class Player : MonoBehaviour, I_HasProgress {
         transform.position = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z);
         transform.rotation = initialRotation;
         gameObject.SetActive(true);
+        inTown = true;
+        inForest = false;
+        inGrass = false;
+        inLabyrinth = false;
         OnRevivePlayer?.Invoke(this, EventArgs.Empty);
         health = healthMax;
         isDeath = false;

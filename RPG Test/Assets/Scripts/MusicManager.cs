@@ -8,6 +8,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private AudioClip musicNight;
     [SerializeField] private AudioClip musicFight;
     [SerializeField] private AudioClip musicLabyrinth;
+    [SerializeField] private AudioClip musicLake;
     public static MusicManager Instance { get; private set; }
 
     private AudioSource audioSource;
@@ -44,6 +45,11 @@ public class MusicManager : MonoBehaviour
     public void LabyrinthSong() {
         StopAllCoroutines();
         StartCoroutine(ChangeSong(musicLabyrinth));
+    }
+
+    public void LakeSong() {
+        StopAllCoroutines();
+        StartCoroutine(ChangeSong(musicLake));
     }
 
     public void FightSong() {

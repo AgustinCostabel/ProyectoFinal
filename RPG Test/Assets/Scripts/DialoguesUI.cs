@@ -67,13 +67,13 @@ public class DialoguesUI : MonoBehaviour
         dialogueChoices.SetActiveTrue();
         Player.Instance.SetIsDoingAction(true);
         GameManager.Instance.SetMenuOpened(true);
-        continueButton.gameObject.SetActive(true);
+        //continueButton.gameObject.SetActive(true);
         DialogueContinue();
     }
 
 
     public void DialogueContinue() {
-        //continueButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
         if (currentStory.canContinue) {
             /*if (sentencesCount % 2 != 0) {
                 dialogueImage.sprite = spritePlayer;
@@ -127,6 +127,8 @@ public class DialoguesUI : MonoBehaviour
                 yield return new WaitForSeconds(speedText / 100);
             }
         }
+
+        continueButton.gameObject.SetActive(true);
     }
 
     private string ProcessTags(string text) {
@@ -201,6 +203,10 @@ public class DialoguesUI : MonoBehaviour
         GameManager.Instance.SetMenuOpened(false);
         sentencesCount = 0;
         DeactiveChoices();
+
+        if(GameManager.Instance.IsNight() && titleNPC == "Sofia") {
+            FinalChoiceUI.Instance.Activate();
+        }
     }
 
     public void DialogueChoices() {

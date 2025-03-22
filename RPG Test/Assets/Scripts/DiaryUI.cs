@@ -15,12 +15,14 @@ public class DiaryUI : MonoBehaviour
     [SerializeField] private DiaryEntrie entrie5;
 
     [SerializeField] private GameObject diaryActivation;
+    [SerializeField] private GameObject pageActivation;
+    [SerializeField] private TextMeshProUGUI pageText;
     [SerializeField] private TextMeshProUGUI entrieText;
     [SerializeField] private TextMeshProUGUI entrieRiddle;
 
     private void Awake() {
         if (Instance != null) {
-            Debug.Log("ERROR: MORE THAN DIARY");
+            Debug.Log("ERROR: MORE THAN ONE DIARYUI");
         }
         Instance = this;
     }
@@ -49,8 +51,19 @@ public class DiaryUI : MonoBehaviour
         Player.Instance.SetIsDoingAction(true);
     }
 
+    public void PageActivated(string t) {
+        pageText.text = t;
+        pageActivation.SetActive(true);
+        Player.Instance.SetIsDoingAction(true);
+    }
+
     public void Deactivate() {
         diaryActivation.SetActive(false);
+        Player.Instance.SetIsDoingAction(false);
+    }
+
+    public void DeactivatePage() {
+        pageActivation.SetActive(false);
         Player.Instance.SetIsDoingAction(false);
     }
 

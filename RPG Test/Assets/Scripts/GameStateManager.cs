@@ -40,6 +40,7 @@ public class GameStateManager : MonoBehaviour {
     [SerializeField] private NPC daren;
     [SerializeField] private NPC judy;
     [SerializeField] private NPC ren;
+    [SerializeField] private NPC ashley;
     [SerializeField] private Transform lanternSpawn;
     [SerializeField] private GameObject fakeWall;
     [SerializeField] private GameObject secretFence;
@@ -76,6 +77,7 @@ public class GameStateManager : MonoBehaviour {
     [SerializeField] private Clue missionBear;
     [SerializeField] private Clue missionLabyrinth;
     [SerializeField] private Clue missionDiary;
+    [SerializeField] private Clue missionTruth;
 
     //Clues
     [SerializeField] private Clue[] clues;
@@ -86,6 +88,10 @@ public class GameStateManager : MonoBehaviour {
     [SerializeField] private Clue lakeFence;
     [SerializeField] private Clue cemetery;
 
+    //EndingObjects
+    [SerializeField] private EndingObjects fire;
+    [SerializeField] private EndingObjects potion;
+
     private void OnEnable() {
         foreach (Clue clue in clues) {
             clue.OnClueInteracted += HandleClueInteraction;
@@ -95,9 +101,6 @@ public class GameStateManager : MonoBehaviour {
     private void HandleClueInteraction(object sender, ClueEventArgs e) {
         // Get the clue that was interacted with
         Clue interactedClue = e.InteractedClue;
-
-        // Now you can handle the clue interaction in your game state manager
-        Debug.Log($"Clue {interactedClue.name} was interacted with!");
 
         // Perform actions based on the interacted clue
         if (interactedClue.name == FOOTPRINTS) {
@@ -176,7 +179,8 @@ public class GameStateManager : MonoBehaviour {
         if (interactedClue.name == BOOK) {
             GameManager.Instance.CallNight();
             SoundManager.Instance.PlaySoundThunder();
-            GameStateManager.Instance.UpdateMissionText("Labyrinth", "I found a BOOK");
+            UpdateMissionText("Labyrinth", "I found a BOOK");
+            BookUI.Instance.Activate();
         }
         if (interactedClue.name == LOVEPOTION) {
             rose.ActiveThirdChoice();
@@ -195,11 +199,18 @@ public class GameStateManager : MonoBehaviour {
             GameManager.Instance.OnSunrise += GameManager_OnSunrise;
             GameManager.Instance.OnSunset += GameManager_OnSunset;
             GameManager.Instance.OnNight += GameManager_OnNight;
+            GameManager.Instance.OnTimeLapsed += GameManager_OnTimeLapsed;
         }
     }
 
-    private void Start() {
+    private void GameManager_OnTimeLapsed(object sender, System.EventArgs e) {
         
+    }
+
+    private void Start() {
+        if (isSecondEvent) {
+            SecondEvent();
+        }
     }
 
     private void GameManager_OnSunrise(object sender, System.EventArgs e) {
@@ -352,7 +363,6 @@ public class GameStateManager : MonoBehaviour {
     }
 
     public void FirstEntrieActivated() {
-        Debug.Log("First entrie activated");
         missionDiary.Activate();
     }
 
@@ -364,11 +374,16 @@ public class GameStateManager : MonoBehaviour {
         lakeFenceLeft.transform.localEulerAngles = new Vector3(0, -90, 0);
         lakeFenceRight.transform.localEulerAngles = new Vector3(0, 90, 0);
         lakeFence.gameObject.SetActive(false);
-        UpdateMissionText("Diary", "I found all the Diary entries");
+        UpdateMissionText("Diary", "I found all the DIARY entries");
+        missionTruth.Activate();
+    }
+
+    public void TalkedWithEndingCharacter() {
+        fire.gameObject.SetActive(true);
+        potion.gameObject.SetActive(true);
     }
 
     public void UpdateMissionText(string missionName, string newText) {
-        Debug.Log("Updating Mission");
         TMP_Text[] textObjects = missions.GetComponentsInChildren<TMP_Text>(); // Creates the array
 
         foreach (TMP_Text text in textObjects) {
@@ -379,7 +394,5 @@ public class GameStateManager : MonoBehaviour {
                 break; // Stop loop after finding the mission
             }
         }
-
-        // Array will be automatically deleted by the garbage collector
     }
 }

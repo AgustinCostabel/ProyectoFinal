@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
 
     private void Player_OnDeathPlayer(object sender, EventArgs e) {
         MusicManager.Instance.StopSong();
+        WeatherManager.Instance.StopJungle();
         deathFadeOut.SetTrigger("Death");
         Invoke("Restart" , 6);
     }
@@ -170,6 +172,15 @@ public class GameManager : MonoBehaviour
     public void Restart() {
         gameTimer = gameTimerMax;
         OnTimeLapsed?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void RestartGame() {
+        deathFadeOut.SetTrigger("Death");
+        Invoke("RestartScene", 6);
+    }
+
+    public void RestartScene() {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void PauseGame() {

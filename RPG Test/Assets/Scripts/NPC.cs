@@ -16,7 +16,7 @@ public class NPC : MonoBehaviour, I_InteractableObject
     [SerializeField] private string[] questionsText;
     [SerializeField] private Sprite dialogueSprite;
     [SerializeField] private string titleNPC;
-    [SerializeField] private GameObject characterBox;
+    //[SerializeField] private GameObject characterBox;
     [SerializeField] private AudioClip[] voice;
     [SerializeField] private Boolean specialDialogueSunset;
     [SerializeField] private Boolean specialDialogueNight;
@@ -63,6 +63,10 @@ public class NPC : MonoBehaviour, I_InteractableObject
                     DialoguesUI.Instance.DialogueStart(dialogueBeforeQuestion[dialogueIndex], dialogueSprite, titleNPC, this);
                 }
             }
+        }
+
+        if(titleNPC == "???") {
+            GameStateManager.Instance.TalkedWithEndingCharacter();
         }
     }
 

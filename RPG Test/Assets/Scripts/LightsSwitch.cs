@@ -22,19 +22,9 @@ public class LightsSwitch : MonoBehaviour
         return lightsTown;
     }
 
-    public GameObject[] GetLightsCemetery() {
-        return lightsCemetery;
-    }
-
     public GameObject[] GetLightsVillage() {
         return lightsVillage;
     }
-
-    public GameObject[] GetLightsLabyrinth() {
-        return lightsLabyrinth;
-    }
-
-
 
 
 }
