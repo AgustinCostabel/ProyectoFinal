@@ -98,7 +98,6 @@ public class DialoguesUI : MonoBehaviour
                 DialogueChoices();
             } else {
                 DialogueEnd();
-                isDialogueSpecial = false;
             }
         }
     }
@@ -207,6 +206,8 @@ public class DialoguesUI : MonoBehaviour
         if(GameManager.Instance.IsNight() && titleNPC == "Sofia") {
             FinalChoiceUI.Instance.Activate();
         }
+
+        isDialogueSpecial = false;
     }
 
     public void DialogueChoices() {

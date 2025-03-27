@@ -266,9 +266,25 @@ public class Player : MonoBehaviour, I_HasProgress {
             if (inForest) {
                 WeatherManager.Instance.StopJungle();
                 MusicManager.Instance.LabyrinthSong();
+                //Lights
+                if (GameManager.Instance.IsNight()) {
+                    foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
+                        if (lightsVillage != null) {
+                            lightsVillage.GetComponent<Light>().enabled = false;
+                        }
+                    }
+                }
             } else {
                 WeatherManager.Instance.PlayJungle();
                 MusicManager.Instance.DayNightSong();
+                //Lights
+                if (GameManager.Instance.IsNight()) {
+                    foreach (GameObject lightsVillage in LightsSwitch.Instance.GetLightsVillage()) {
+                        if (lightsVillage != null) {
+                            lightsVillage.GetComponent<Light>().enabled = true;
+                        }
+                    }
+                }
             }
             inGrass = !inGrass;
             inLabyrinth = !inLabyrinth;

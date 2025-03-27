@@ -228,10 +228,12 @@ public class GameManager : MonoBehaviour
     public void CallNight() {
         isNight = true;
         OnNight?.Invoke(this, EventArgs.Empty);
+        isSunset = false;
     }
 
     public void Sunset() {
         isSunset = true;
         OnSunset?.Invoke(this, EventArgs.Empty);
+        isNight = false;
     }
 }

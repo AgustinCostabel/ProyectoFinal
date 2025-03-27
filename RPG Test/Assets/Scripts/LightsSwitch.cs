@@ -18,12 +18,33 @@ public class LightsSwitch : MonoBehaviour
         Instance = this;
     }
 
+    private void Start() {
+        GameManager.Instance.OnNight += Instance_OnNight;
+    }
+
+    private void Instance_OnNight(object sender, System.EventArgs e) {
+        foreach (GameObject lightsTown in GetLightsTown()) {
+            if (lightsTown != null) {
+                lightsTown.GetComponent<Light>().enabled = false;
+            }
+        }
+        foreach (GameObject lightsVillage in GetLightsVillage()) {
+            if (lightsVillage != null) {
+                lightsVillage.GetComponent<Light>().enabled = false;
+            }
+        }
+    }
+
     public GameObject[] GetLightsTown() {
         return lightsTown;
     }
 
     public GameObject[] GetLightsVillage() {
         return lightsVillage;
+    }
+
+    public GameObject[] GetLightsLabyrinth() {
+        return lightsLabyrinth;
     }
 
 
