@@ -42,6 +42,9 @@ public class DialoguesUI : MonoBehaviour
     private Ink.Runtime.Story currentStory;
     private NPC currentNPC;
     private Boolean isDialogueSpecial = false;
+    private bool isTyping = false;
+    private Coroutine typingCoroutine;
+    private string currentSentence = "";
 
     private int sentencesCount = 0;
 
@@ -59,6 +62,7 @@ public class DialoguesUI : MonoBehaviour
     }
 
     public void DialogueStart(TextAsset inkJSON, Sprite newSprite, string title, NPC npc) {
+        isTyping = false;
         currentStory = new Ink.Runtime.Story(inkJSON.text);
         titleNPC = title;
         spriteNPC = newSprite;
@@ -67,42 +71,49 @@ public class DialoguesUI : MonoBehaviour
         dialogueChoices.SetActiveTrue();
         Player.Instance.SetIsDoingAction(true);
         GameManager.Instance.SetMenuOpened(true);
-        //continueButton.gameObject.SetActive(true);
+        continueButton.gameObject.SetActive(true);
         DialogueContinue();
     }
 
 
     public void DialogueContinue() {
-        continueButton.gameObject.SetActive(false);
-        if (currentStory.canContinue) {
-            /*if (sentencesCount % 2 != 0) {
-                dialogueImage.sprite = spritePlayer;
-                dialogueTitle.text = titlePlayer;
-                dialogueBox.transform.localPosition = new Vector3(-405, -150, 0);
-            } else {
+        //continueButton.gameObject.SetActive(false);
+        if (isTyping) {
+            StopCoroutine(typingCoroutine);
+            dialogueText.text = currentStory.currentText;
+            isTyping = false;
+        } else {
+            if (currentStory.canContinue) {
+                /*if (sentencesCount % 2 != 0) {
+                    dialogueImage.sprite = spritePlayer;
+                    dialogueTitle.text = titlePlayer;
+                    dialogueBox.transform.localPosition = new Vector3(-405, -150, 0);
+                } else {
+                    dialogueImage.sprite = spriteNPC;
+                    dialogueTitle.text = titleNPC;
+                    dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
+                    currentNPC.PlayVoiceSound();
+                }*/
                 dialogueImage.sprite = spriteNPC;
                 dialogueTitle.text = titleNPC;
-                dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
+                //dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
                 currentNPC.PlayVoiceSound();
-            }*/
-            dialogueImage.sprite = spriteNPC;
-            dialogueTitle.text = titleNPC;
-            //dialogueBox.transform.localPosition = new Vector3(405, -150, 0);
-            currentNPC.PlayVoiceSound();
-            dialogueChoices.SetActiveFalse();
-            StopAllCoroutines();
-            StartCoroutine(TypeSentence(currentStory.Continue()));
-            sentencesCount++;
-        } else {
-            if (GameStateManager.Instance.IsSecondEvent() && !isDialogueSpecial) {
-                DialogueChoices();
+                dialogueChoices.SetActiveFalse();
+                StopAllCoroutines();
+                typingCoroutine = StartCoroutine(TypeSentence(currentStory.Continue()));
+                sentencesCount++;
             } else {
-                DialogueEnd();
+                if (GameStateManager.Instance.IsSecondEvent() && !isDialogueSpecial) {
+                    DialogueChoices();
+                } else {
+                    DialogueEnd();
+                }
             }
         }
     }
 
     IEnumerator TypeSentence(string sentence) {
+        isTyping = true;
         string processedText = ProcessTags(sentence); // Process tags to identify effects
         dialogueText.text = ""; // Clear the dialogue box
 
@@ -127,6 +138,7 @@ public class DialoguesUI : MonoBehaviour
             }
         }
 
+        isTyping = false;
         continueButton.gameObject.SetActive(true);
     }
 
@@ -236,6 +248,7 @@ public class DialoguesUI : MonoBehaviour
         if (titleNPC == JUDY && choice.index == 2) {
             Player.Instance.ObtainMap();
             Player.Instance.ObtainCompass();
+            GameStateManager.Instance.LeaveTown();
         }
         DialogueStart(choice.dialogueText, spriteNPC, titleNPC, currentNPC);
     }

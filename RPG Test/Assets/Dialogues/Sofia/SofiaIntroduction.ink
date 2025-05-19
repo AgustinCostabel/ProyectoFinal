@@ -2,7 +2,8 @@ She stands with arms crossed, her gaze steady, analyzing you before speaking.
 <b>You’re awake. Good. My name is Sofia and I'm the leader in town.</b> Her tone is even, professional, but there’s something heavy beneath it. <b>I won’t waste time. We found you unconscious last night—beside our neighbor Sheila’s body. Do you understand what that means?</b>
 She waits for a reaction, then continues, her voice firm. <b>Right now, you are the only suspect. The town is demanding justice. If we don’t find the real killer by the end of the day, they will execute you.</b> She lets the words settle, her expression unreadable.
 <b>I don’t want that to happen. So listen carefully—I’m giving you a chance. Find proof of who really did this, and I will make sure you walk away from this town alive.</b>
-She takes a deep breath, then hands you a <color=\#006400>JOURNAL</color>.
-<color=\#FFFFFF>(Use "J" to open the JOURNAL)</color>
+She takes a deep breath, then hands you a <color=\#c30010>JOURNAL</color>.
+<color=\#c30010>(Use "J" to open the JOURNAL)</color>
 <b>Start with this. I’ve written down what we know so far—the people in town, their roles, and what little we understand of Sheila’s death. It’s not much, but it’s a start</b>
+<b>Oh! and one last thing, make sure to speak with Judy she has a <color=\#c30010>MAP</color> you can use, you will need it before leaving the town. You can find her near in front of the library. Good luck Kerlosch.</b>
 

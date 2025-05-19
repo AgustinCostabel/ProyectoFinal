@@ -14,8 +14,8 @@ public class DirectionalLight : MonoBehaviour
     private new Light light;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float rotationSpeedSkybox;
-    //[SerializeField] private float rotationX = 45f;
-    //[SerializeField] private float rotationY = 45f;
+    [SerializeField] private float rotationX = 45f;
+    [SerializeField] private float rotationY = 45f;
     public bool direction = true;
 
     [SerializeField] private float lerpTime;
@@ -48,6 +48,7 @@ public class DirectionalLight : MonoBehaviour
 
         sunsetColor = skyColors[2];
         nightColor = skyColors[4];
+
     }
 
     void Update() {
@@ -80,6 +81,8 @@ public class DirectionalLight : MonoBehaviour
                 }
             }
         }
+
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,RotationY(),transform.localEulerAngles.z);
     }
 
     private void GameManager_OnTimeLapsed(object sender, EventArgs e) {
@@ -110,19 +113,19 @@ public class DirectionalLight : MonoBehaviour
     }
 
 
-    /*float RotationX() {
+    float RotationX() {
         rotationX += rotateSpeed * Time.deltaTime;
         if (rotationX >= 70f)
             rotationX -= 25f;
         return direction ? rotationX : -rotationX;
-    }*/
+    }
 
-    /*float RotationY() {
+    float RotationY() {
         rotationY += rotateSpeed * Time.deltaTime;
-        if (rotationY >= 55f)
-            rotationY -= 100f;
+        if (rotationY >= 360f)
+            rotationY = 0f;
         return direction ? rotationY : -rotationY;
-    }*/
+    }
 
     public Light GetLight() {
         return light;

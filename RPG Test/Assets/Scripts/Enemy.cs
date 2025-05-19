@@ -62,7 +62,6 @@ public class Enemy : MonoBehaviour, I_HasProgress {
         if (Vector3.Distance(transform.position, player.transform.position) > chaseDistance) {
             if (fighting == true) {
                 MusicManager.Instance.StopSong();
-                MusicManager.Instance.DayNightSong();
                 fighting = false;
                 animator.SetBool(RUN, false);
                 chaseDistance /= 2;
@@ -108,7 +107,6 @@ public class Enemy : MonoBehaviour, I_HasProgress {
         //Destroy(gameObject, 10f);
         isDeath = true;
         MusicManager.Instance.StopSong();
-        MusicManager.Instance.DayNightSong();
         Player.Instance.Talk("Well, that was easier than I thought");
     }
 

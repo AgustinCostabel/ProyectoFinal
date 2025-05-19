@@ -1,5 +1,5 @@
-Her eyes light up with excitement as she hands you the <color=\#006400>MAP</color>.
-<color=\#FFFFFF>(Use "M" to open the MAP)</color>
+Her eyes light up with excitement as she hands you the <color=\#c30010>MAP</color>.
+<color=\#c30010>(Use "M" to open the MAP)</color>
 <b> Here, this is from my family—it's been passed down for generations! I’ve always been told it’s got... special properties. It’ll show you things that others might miss.</b>
 She hands you a compass with a twinkle in her eye. <b> And here’s a compass. You might need it to keep your bearings! Be careful out there, especially after what happen last night.</b>
 Her voice becomes a little more serious, but still full of enthusiasm. <b>I know it’s a bit strange, but... this could be the start of something incredible. A real-life mystery to solve!</b>

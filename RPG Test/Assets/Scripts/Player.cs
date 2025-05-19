@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, I_HasProgress {
 
     [SerializeField] private int healthMax;
     [SerializeField] private float moveSpeedOriginal = 3f;
+    [SerializeField] private float runSpeed = 2f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask InteractbleObjectlayerMask;
     [SerializeField] private Transform rightHand;
@@ -328,7 +329,7 @@ public class Player : MonoBehaviour, I_HasProgress {
             }
 
             if (gameInput.GetRun() && moveSpeed != 0) {
-                moveSpeed = moveSpeedOriginal * 2;
+                moveSpeed = moveSpeedOriginal * runSpeed;
             }
             //Move
             Vector3 forward = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized;

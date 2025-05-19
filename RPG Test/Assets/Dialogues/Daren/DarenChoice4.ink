@@ -1,2 +1,3 @@
-<b>A sword? You against the bear?</b> He lets out a short, humorless chuckle before tossing a sword onto the counter. <b>Fine. Take it. Not like it’ll do you much good. Just try not to die. I’ll be needing that sword back after you’re done with whatever stupid idea you have in mind.</b> Despite his words, there’s the slightest trace of concern in his voice.
+<b>A sword? You against the bear?</b> He lets out a short, humorless chuckle before tossing a sword onto the counter. <b>Fine. Take it. Not like it’ll do you much good. Just try not to die.</b>
+<b>I’ll be needing that sword back after you’re done with whatever stupid idea you have in mind.</b> Despite his words, there’s the slightest trace of concern in his voice.
 <b>... make sure not to die before solving this. I won't forgive you if you do.</b> He signs the chest behind him. <b>Is inside of it.</b>

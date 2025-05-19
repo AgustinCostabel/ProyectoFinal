@@ -31,6 +31,7 @@ public class GameStateManager : MonoBehaviour {
     private const string PILLARSTONE4 = "PillarStone4";
     private const string BOOK = "Book";
     private const string LOVEPOTION = "LovePotion";
+    private const string CLEAN_HANDKERCHIEF = "Clean Handkerchief";
 
     [SerializeField] private GameObject sheila;
     [SerializeField] private Lantern lantern;
@@ -87,6 +88,7 @@ public class GameStateManager : MonoBehaviour {
     [SerializeField] private Clue key;
     [SerializeField] private Clue lakeFence;
     [SerializeField] private Clue cemetery;
+    [SerializeField] private GameObject handkerchief; 
 
     //EndingObjects
     [SerializeField] private EndingObjects fire;
@@ -104,7 +106,6 @@ public class GameStateManager : MonoBehaviour {
 
         // Perform actions based on the interacted clue
         if (interactedClue.name == FOOTPRINTS) {
-            Debug.Log("Active Ren choice");
             ren.ActiveThirdChoice();
         }
         if (interactedClue.name == FISHINGROPE) {
@@ -133,7 +134,6 @@ public class GameStateManager : MonoBehaviour {
             UpdateMissionText("Corpse", "The corpse has no visible wounds");
         }
         if (interactedClue.name == PILLARSTONE1) {
-            Debug.Log("Stone 1 Activated");
             vaseFire1.gameObject.SetActive(true);
             interactedClue.Deactivate();
             SoundManager.Instance.PlaySoundStonePush();
@@ -144,7 +144,6 @@ public class GameStateManager : MonoBehaviour {
             }
         }
         if (interactedClue.name == PILLARSTONE2) {
-            Debug.Log("Stone 2 Activated");
             vaseFire2.gameObject.SetActive(true);
             interactedClue.Deactivate();
             SoundManager.Instance.PlaySoundStonePush();
@@ -155,7 +154,6 @@ public class GameStateManager : MonoBehaviour {
             }
         }
         if (interactedClue.name == PILLARSTONE3) {
-            Debug.Log("Stone 3 Activated");
             vaseFire3.gameObject.SetActive(true);
             interactedClue.Deactivate();
             SoundManager.Instance.PlaySoundStonePush();
@@ -166,7 +164,6 @@ public class GameStateManager : MonoBehaviour {
             }
         }
         if (interactedClue.name == PILLARSTONE4) {
-            Debug.Log("Stone 4 Activated");
             vaseFire4.gameObject.SetActive(true);
             interactedClue.Deactivate();
             SoundManager.Instance.PlaySoundStonePush();
@@ -184,6 +181,9 @@ public class GameStateManager : MonoBehaviour {
         }
         if (interactedClue.name == LOVEPOTION) {
             rose.ActiveThirdChoice();
+        }
+        if(interactedClue.name == CLEAN_HANDKERCHIEF) {
+            handkerchief.gameObject.SetActive(false);
         }
     }
 
@@ -210,6 +210,8 @@ public class GameStateManager : MonoBehaviour {
     private void Start() {
         if (isSecondEvent) {
             SecondEvent();
+            ren.gameObject.transform.position = new Vector3(175, 10, 235);
+            fakeWall.gameObject.SetActive(false);
         }
     }
 
@@ -228,7 +230,7 @@ public class GameStateManager : MonoBehaviour {
     private void GameManager_OnSunset(object sender, System.EventArgs e) {
 
         //NPC
-        judy.transform.position = new Vector3(215, 10, 165);
+        judy.transform.position = new Vector3(217, 10, 165);
         judy.transform.localEulerAngles = new Vector3(0, 0, 0);
         judy.ActiveFourChoice();
 
@@ -282,8 +284,8 @@ public class GameStateManager : MonoBehaviour {
 
         judy.ActiveThirdChoice();
         rose.gameObject.transform.position = new Vector3(225, 10, 227);
-        ren.gameObject.transform.position = new Vector3(175, 10, 235);
-        fakeWall.gameObject.SetActive(false);
+        //ren.gameObject.transform.position = new Vector3(175, 10, 235);
+        //fakeWall.gameObject.SetActive(false);
     }
 
     public void ThirdEvent() {
@@ -346,6 +348,11 @@ public class GameStateManager : MonoBehaviour {
 
     public bool IsThirdEvent() {
         return isThirdEvent;
+    }
+
+    public void LeaveTown() {
+        ren.gameObject.transform.position = new Vector3(175, 10, 235);
+        fakeWall.gameObject.SetActive(false);
     }
 
     public void BearEncounter() {

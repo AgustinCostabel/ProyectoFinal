@@ -1,1 +1,1 @@
-He stands firm. <b> How can I help you? </b>
+He stands firm. <b> The outside could be dangerous, remember to use your <color=\#c30010>MAP</color>. </b>
