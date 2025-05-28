@@ -105,9 +105,9 @@ public class DirectionalLight : MonoBehaviour
     }
 
     private void GameManager_OnNight(object sender, System.EventArgs e) {
-        RenderSettings.skybox.SetColor("_Tint", new Color32(0, 0, 0, 1));
+        RenderSettings.skybox.SetColor("_Tint", new Color32(50, 50, 50, 1));
         //light.color = skyColors[4];
-        light.intensity = 1f;
+        light.intensity = 2f;
 
         isNight = true;
     }

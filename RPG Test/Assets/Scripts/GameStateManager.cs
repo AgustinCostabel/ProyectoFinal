@@ -237,7 +237,7 @@ public class GameStateManager : MonoBehaviour {
         ren.transform.position = new Vector3(70, 10, 195);
         ren.transform.localEulerAngles = new Vector3(0, -90, 0);
 
-        rose.transform.position = new Vector3(90, 10, 245);
+        rose.transform.position = new Vector3(146, 10, 250);
 
         sheilaCorpse.gameObject.SetActive(false);
     }
